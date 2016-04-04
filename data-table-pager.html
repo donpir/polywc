@@ -1,0 +1,132 @@
+<!--
+
+@license
+This file is part of POLYWC library.
+
+POLYWC is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+JSDataChecker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+Copyright (C) 2016 POLYWC - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+Contributors: Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+Last change: 2016-04-04
+Single file version: v0.3.1
+
+-->
+
+<!-- Polymer libraries -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!-- Polymer web-components -->
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="bower_components/iron-icons/hardware-icons.html">
+
+<!--
+
+`polywc-pager` is a simple pager component, showing left and right arrows. The aim is
+to move to previous and next page in set of multiple pages.
+
+Examples of uses:
+    * a table of many paged items have a polywc-pager to change the current visible page.
+
+Example:
+    * <polywc-pager tot-items="7"></polywc-pager>
+
+-->
+<dom-module is="data-table-pager">
+    <template>
+        <style is="custom-style">
+            paper-icon-button.flatButton {
+                color: var(--paper-pink-500);
+                --paper-icon-button-ink-color: var(--paper-indigo-500);
+            }
+            paper-icon-button.flatButton:hover {
+                background-color: var(--paper-pink-500);
+                color: white;
+            }
+        </style>
+        <div class="ui right floated pagination menu">
+            <paper-icon-button icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton"></paper-icon-button>
+            <a id="pagerleftarrow" class="icon item" on-click="goPrevPage">
+                <i class="left chevron icon"></i>
+            </a>
+
+            <span id="pageLabel" class="item">{{label}}</span>
+
+            <a id="pagerrightarrow" class="icon item" on-click="goNextPage">
+                <!--<i class="right chevron icon"></i>-->
+            </a>
+            <paper-icon-button icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton"></paper-icon-button>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: "data-table-pager",
+
+            ready: function() { },
+
+            properties: {
+                totItems: { type: Number, value: 0 /*, observer: 'totItemsChanged'*/ },
+                itemsPerPage: { type: Number, value: 5 /*, observer: 'itemsPerPageChanged'*/  },
+                curPage: { type: Number, value: 1 /*, observer: 'curPageChanged'*/ },
+                label: { type: String, computed: 'computeLabel(totItems, itemsPerPage, curPage)'},
+                showPageLabel: { type: Boolean, value: false,  observer: 'showPageLabelChanged' }
+            },
+
+            observers: [
+                'updateArrows(totItems, itemsPerPage, curPage)'
+            ],
+
+            computeLabel: function(totItems, itemsPerPage, curPage) {
+                var _lowerBound = (curPage - 1) * itemsPerPage + 1;
+                var _upperBound = curPage * itemsPerPage;
+                if (_upperBound > totItems) _upperBound = totItems;
+                return  _lowerBound + '-' + _upperBound + ' di ' + this.totItems;
+            },
+
+            showPageLabelChanged: function() {
+                var displayValue = this.showPageLabel ? 'block' : 'none';
+                this.$.pageLabel.style.display = displayValue;
+            },
+
+            updateArrows: function(totItems, itemsPerPage, curPage) {
+                if (curPage == 1) this.$.pagerleftarrow.classList.add("disabled");
+                else this.$.pagerleftarrow.classList.remove("disabled");
+
+                if (this.isLastPage() == true) this.$.pagerrightarrow.classList.add("disabled");
+                else this.$.pagerrightarrow.classList.remove("disabled");
+            },
+
+            isLastPage: function() {
+                var totPages = Math.ceil(this.totItems / this.itemsPerPage);
+                return this.curPage == totPages;
+            },
+
+            /**
+             **  GUI User Driven Events
+             **/
+
+            goPrevPage: function() {
+                if (!$(this.$.pagerleftarrow).hasClass("disabled"))
+                    this.fire('data-table-pager-go-to-event', this.curPage - 1 );
+            },
+
+            goNextPage: function() {
+                if (!$(this.$.pagerrightarrow).hasClass("disabled"))
+                    this.fire('data-table-pager-go-to-event', this.curPage + 1 );
+            }
+        });
+    </script>
+
+</dom-module>
