@@ -2,11 +2,17 @@
 
 <html>
 <head>
-    <link rel="import" href="../data-table-pager.html">
+    <link rel="import" href="../data-table/data-table.html">
 </head>
 <body>
-    <data-table-pager tot-items="7" show-page-label>
 
-    </data-table-pager>
+    <data-table headers='["id", "Author", "Title", "Year"]'
+                field-id="id" fields='["id", "author", "title", "year"]'
+                fields-data='[ {"id":"1", "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003},
+                               {"id":"1", "author":"Dan Brown", "title":"Deception point", "year": 2001} ]'
+
+                show-pager
+            ></data-table>
+
 </body>
 </html>

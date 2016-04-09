@@ -1,52 +1,64 @@
 <!--
-@license
-This file is part of POLYWC library.
+    @license
+    This file is part of POLYWC library.
 
-POLYWC is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-JSDataChecker is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+    JSDataChecker is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
 
-Copyright (C) 2016 POLYWC - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
-Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
-License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+    Copyright (C) 2016 POLYWC - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
 -->
 
 <!--
-Contributors: Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
-Last change: 2016-04-04
-Single file version: v0.3.1
+*    Contributors: Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+*    Last change: 2016-04-04
+*    Single file version: v0.3.1
 -->
 
-
 <!-- Polymer libraries -->
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <!-- JQuery -->
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="utils.js"></script>
+<!--<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="utils.js"></script>-->
 
 <!-- Semantic UI -->
-<link rel="stylesheet" type="text/css" href="../../bower_components/semantic/dist/semantic.css">
+<!--<link rel="stylesheet" type="text/css" href="../../bower_components/semantic/dist/semantic.css">
 <script src="../../bower_components/semantic/dist/semantic.min.js"></script>
+-->
 
 <!-- Include CUSTOM Web Components -->
-<link rel="import" href="data-table-pager.html">
+<link rel="import" href="../data-table-pager/data-table-pager.html">
 
-<!-- WEB COMPONENT -->
+<!--
+
+`polywc-data-table` is a simple web-component table, showing headers and data as well as controls.
+
+The web-component can be used in two ways: statically or dynamically.
+
+The simplest way to use it is the following, which shows a table with three columns:
+
+     <data-table headers='["id", "Author", "Title", "Year"]'
+                field-id="id" fields='["id", "author", "title", "year"]'
+                fields-data='[ {"id":"1", "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003},
+                               {"id":"1", "author":"Dan Brown", "title":"Deception point", "year": 2001} ]'>
+     </data-table>
+
+-->
 <dom-module is="data-table">
     <template>
-        <!-- <iron-ajax auto url="{{dataUrl}}" handle-as="json" last-response="{{response}}"></iron-ajax>-->
 
         <table class="ui compact celled striped table">
             <thead id="tblheader">
@@ -58,14 +70,14 @@ Single file version: v0.3.1
                         <th>{{item}}</th>
                     </template>
                     <th id="tblheaderoptions">
-                    	<template is="dom-if" if="{{showPager}}">
+                    	<!--<template is="dom-if" if="{{showPager}}">
                         <data-table-pager id="topPager" tot-items="7"></data-table-pager>
-                        </template>
+                        </template>-->
                     </th>
                 </tr>
             </thead>
             <tbody id="tblbody">
-                <template is="dom-repeat" items="{{response.data}}" as="dataRow">
+                <template is="dom-repeat" items="{{fieldsData}}" as="dataRow">
                 <tr id="{{dataRow.id}}">
                 	<template is="dom-if" if="{{showControls}}">
                     <td><paper-checkbox id="{{dataRow.id}}" on-change="handleCheck"></paper-checkbox></td>
@@ -109,6 +121,10 @@ Single file version: v0.3.1
     </template>
     <style>
 
+        table, td {
+            border: 1px solid;
+        }
+
         #tblheadercheckboxes { width: 8px; }
         #tblheaderoptions { width: 16px; }
 
@@ -147,12 +163,19 @@ Single file version: v0.3.1
                 headers:            { type: Array, value: undefined },
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
+                fieldsData:         { type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
+
+                //Rendering options.
+                showPager: 			{ type: Boolean, value: false },
+
+                //TODO: check if they need to be removed.
                 dataUrl:            { type: String, value: undefined },
                 serviceEditUrl:     { type: String, value: undefined },
                 _numSelectedItems:  { type: Number, value: 0 },
                 
-                response: 			{ type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
-                
+                //response: 			{ type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
+
+
                 showControls: 		{ type: Boolean, value: false },
                 showPager: 			{ type: Boolean, value: false },
                 showCtrlView:		{ type: Boolean, value: false }
