@@ -2,17 +2,40 @@
 
 <html>
 <head>
+    <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../data-table/data-table.html">
 </head>
 <body>
+    <script type="text/javascript">
+        var books = [
+            { "id":"1",  "author":"Dan Brown", "title":"Digital Fortness", "year": 1998 },
+            { "id":"2",  "author":"Dan Brown", "title":"Angels & Demons", "year": 2000 },
+            { "id":"3",  "author":"Dan Brown", "title":"Deception point", "year": 2001},
+            { "id":"4",  "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003 },
+            { "id":"5",  "author":"Dan Brown", "title":"The Lost Symbol", "year": 2009 },
+            { "id":"6",  "author":"Dan Brown", "title":"Inferno", "year": 2013 },
 
-    <data-table headers='["id", "Author", "Title", "Year"]'
+            { "id":"7",  "author":"J. K. Rowling", "title":"Harry Potter and the Philosopher's Stone", "year": 1997 },
+            { "id":"8",  "author":"J. K. Rowling", "title":"Harry Potter and the Chamber of Secrets", "year": 1998 },
+            { "id":"9",  "author":"J. K. Rowling", "title":"Harry Potter and the Prisoner of Azkaban", "year": 1999 },
+            { "id":"10", "author":"J. K. Rowling", "title":"Harry Potter and the Globlet of Fire", "year": 2000 },
+            { "id":"11", "author":"J. K. Rowling", "title":"Harry Potter and the Order of the Phoenix", "year": 2003 },
+            { "id":"12", "author":"J. K. Rowling", "title":"Harry Potter and the Half-Blood Prince", "year": 2005 },
+            { "id":"13", "author":"J. K. Rowling", "title":"Harry Potter and the Deathly Hallows", "year": 2007 }
+        ];
+    </script>
+
+    <data-table id="tblBooks" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
-                fields-data='[ {"id":"1", "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003},
-                               {"id":"1", "author":"Dan Brown", "title":"Deception point", "year": 2001} ]'
 
                 show-pager
             ></data-table>
+
+    <script type="text/javascript">
+        var $tblBooks = document.querySelector("#tblBooks");
+        $tblBooks.fieldsData = books;
+        debugger;
+    </script>
 
 </body>
 </html>
