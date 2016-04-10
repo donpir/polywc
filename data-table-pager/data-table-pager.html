@@ -46,28 +46,39 @@ Example:
 <dom-module is="data-table-pager">
     <template>
         <style is="custom-style">
-            paper-icon-button.flatButton {
+            /*paper-icon-button.flatButton {
                 color: var(--paper-pink-500);
                 --paper-icon-button-ink-color: var(--paper-indigo-500);
             }
             paper-icon-button.flatButton:hover {
                 background-color: var(--paper-pink-500);
                 color: white;
+            }*/
+
+            .flex {
+                @apply(--layout-horizontal);
             }
+
+            div .textmiddle {
+                padding: 8px;
+                vertical-align: middle;
+            }
+
         </style>
-        <div class="ui right floated pagination menu">
-            <paper-icon-button icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton"></paper-icon-button>
-            <a id="pagerleftarrow" class="icon item" on-click="goPrevPage">
-                <i class="left chevron icon"></i>
-            </a>
+
+        <div class="container flex">
+            <div><paper-icon-button id="pagerleftarrow" icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton"></paper-icon-button></div>
+            <div id="pageLabel" class="item textmiddle">{{label}}</div>
+            <div><paper-icon-button id="pagerrightarrow" icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button></div>
+        </div>
+
+        <!--<div class="ui right floated pagination menu">
+            <paper-icon-button id="pagerleftarrow" icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton"></paper-icon-button>
 
             <span id="pageLabel" class="item">{{label}}</span>
 
-            <a id="pagerrightarrow" class="icon item" on-click="goNextPage">
-                <!--<i class="right chevron icon"></i>-->
-            </a>
-            <paper-icon-button icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button>
-        </div>
+            <paper-icon-button id="pagerrightarrow" icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button>
+        </div>-->
     </template>
 
     <script>
