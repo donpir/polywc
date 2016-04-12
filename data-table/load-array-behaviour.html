@@ -27,7 +27,6 @@
 
         /**
          * @param page is a number greater then one.
-         * @param page
          * @param itemsPerPage
          * @returns {Array.<T>|string|Blob}
          */
@@ -37,7 +36,10 @@
                 throw "LoadArrayBehaviour has a property 'data' that must be an array.";
 
             var startIdx = itemsPerPage * (page - 1);
-            var endIdx = startIdx + itemsPerPage - 1;
+            var endIdx = startIdx + itemsPerPage;
+            //if (endIdx > this.data.length)
+                //endIdx = this.data.length;
+
             var arrSlice = this.data.slice(startIdx, endIdx);
             return arrSlice;
         },
