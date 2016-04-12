@@ -43,7 +43,7 @@
 <link rel="import" href="../data-table-pager/data-table-pager.html">
 
 <!-- Import behaviours -->
-<link rel="import" href="load-array-behaviour.html">
+<link rel="import" href="../data-table-pager/pager-array-behaviour.html">
 
 <!--
 
@@ -184,7 +184,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 showCtrlView:		{ type: Boolean, value: false }
             },
 
-            behaviors: [LoadArrayBehaviour],
+            behaviors: [PagerArrayBehaviour],
 
             computeFieldValue: function(dataRow, fieldKey) {
             	var value = dataRow[fieldKey];
