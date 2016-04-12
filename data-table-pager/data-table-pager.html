@@ -130,12 +130,12 @@ Example:
 
             goPrevPage: function() {
                 if (this.$.pagerleftarrow.classList.contains("disabled") == false)
-                    this.fire('data-table-pager-go-to-event', this.curPage - 1 );
+                    this.fire('data-table-pager-go-to-event', { targetPage: this.curPage - 1, itemsPerPage: this.itemsPerPage } );
             },
 
             goNextPage: function() {
                 if (this.$.pagerrightarrow.classList.contains("disabled") == false)
-                    this.fire('data-table-pager-go-to-event', this.curPage + 1 );
+                    this.fire('data-table-pager-go-to-event', { targetPage: this.curPage + 1, itemsPerPage: this.itemsPerPage } );
             }
 
         });
