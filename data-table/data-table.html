@@ -213,11 +213,22 @@ The simplest way to use it is the following, which shows a table with three colu
                 var _selectedRow = Polymer.dom(this.$.tblbody).querySelector("tr[id='" + _id + "']");
                 _checked ?  _selectedRow.classList.add('tblrowselected') : _selectedRow.classList.remove('tblrowselected');
             },
-            
+
+            refresh: function() {
+                var $bottomPager = this.$$('#bottomPager');
+                var curPage = $bottomPager.curPage;
+                var itemsPerPage = $bottomPager.itemsPerPage;
+                this._loadPage(curPage, itemsPerPage);
+            },
+
             goToPage: function(evt, details) {
-                var arrData = this.load(details.targetPage, details.itemsPerPage);
+                this._loadPage(details.targetPage, details.itemsPerPage);
+            },
+
+            _loadPage: function(targetPage, itemsPerPage) {
+                var arrData = this.load(targetPage, itemsPerPage);
                 this.fieldsData = arrData;
-                this.$$('#bottomPager').curPage = details.targetPage;
+                this.$$('#bottomPager').curPage = targetPage;
                 this.$._numSelectedItems = 0;
             },
 
