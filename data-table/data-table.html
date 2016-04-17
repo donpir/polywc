@@ -30,20 +30,12 @@
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 
-<!-- JQuery -->
-<!--<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="utils.js"></script>-->
-
-<!-- Semantic UI -->
-<!--<link rel="stylesheet" type="text/css" href="../../bower_components/semantic/dist/semantic.css">
-<script src="../../bower_components/semantic/dist/semantic.min.js"></script>
--->
-
 <!-- Include CUSTOM Web Components -->
 <link rel="import" href="../data-table-pager/data-table-pager.html">
 
 <!-- Import behaviours -->
 <link rel="import" href="../data-table-pager/pager-array-behaviour.html">
+<link rel="import" href="../themes/metal-style.html">
 
 <!--
 
@@ -62,6 +54,8 @@ The simplest way to use it is the following, which shows a table with three colu
 -->
 <dom-module is="data-table">
     <template>
+
+        <style is="custom-style" include="metal-style"></style>
 
         <table class="ui compact celled striped table">
             <thead id="tblheader">
@@ -123,10 +117,6 @@ The simplest way to use it is the following, which shows a table with three colu
 
     </template>
     <style>
-
-        table, td {
-            border: 1px solid;
-        }
 
         #tblheadercheckboxes { width: 8px; }
         #tblheaderoptions { width: 16px; }

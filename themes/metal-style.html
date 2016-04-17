@@ -1,0 +1,74 @@
+<!--
+    @license
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    JSDataChecker is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Copyright (C) 2016 POLYWC - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+-->
+
+<!--
+*    Contributors: Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+*    File Description: style file called metal theme.
+-->
+
+<dom-module id="metal-style">
+    <template>
+        <style>
+            table {
+                /*font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;*/
+                border-collapse: separate;
+                border-spacing: 0px;
+                border: solid 1px rgba(34,36,38,.1);
+                border-radius:3px;
+            }
+
+            /* Header and Footer */
+
+            table thead, tfoot {
+                background-color: #f9fafb;
+            }
+
+            table thead th {
+                border-bottom: solid 1px rgba(34,36,38,.1);
+                border-collapse: collapse;
+                height: 45px;
+            }
+
+            table tfoot th {
+                border-top: solid 1px rgba(34,36,38,.1);
+                height: 45px;
+            }
+
+            /* Body */
+
+            table tbody tr td:not(:first-child) {
+                border-left: solid 1px rgba(34,36,38,.1);
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+
+            /*
+            table td {
+                padding: 2px;
+                border-left: solid 1px rgba(34,36,38,.1);
+            }
+
+            table td:first-child {
+                border-left: none;
+                background-color: red;
+            }*/
+
+        </style>
+    </template>
+</dom-module>
