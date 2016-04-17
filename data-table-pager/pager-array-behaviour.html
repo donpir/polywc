@@ -26,12 +26,6 @@
             data: { type: Object, value: undefined, notify: true }
         },
 
-        itemsCount: function() {
-            if (typeof this.data === 'undefined')
-                return 0;
-            return this.data.length;
-        },
-
         /**
          * @param page is a number greater then one.
          * @param itemsPerPage
