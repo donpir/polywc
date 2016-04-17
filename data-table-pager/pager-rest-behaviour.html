@@ -1,0 +1,93 @@
+<script>
+    /**
+    @license
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    JSDataChecker is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Copyright (C) 2016 POLYWC - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors: Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    **/
+</script>
+
+<script type="text/javascript" src="utils.js"></script>
+<script>
+    PagerRestBehaviour = {
+        properties: {
+            restUrl: { type: String, value: undefined, notify: true, observer: 'handleDataChange' }
+        },
+
+        itemsCount: function() {
+            if (typeof this.data === 'undefined')
+                return 0;
+            return this.data.length;
+        },
+
+        /**
+         * @param page is a number greater then one.
+         * @param itemsPerPage
+         * @returns {Array.<T>|string|Blob}
+         */
+        itemsLoad: function(page, itemsPerPage) {
+            var httpGetAsync = function(theUrl, callback) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200)
+                        callback(xhttp.responseText);
+                };
+                xhttp.open("GET", theUrl, true); // true for asynchronous
+                xhttp.send(null);
+            };//EndFunction.
+
+            //Creates the URL.
+            var targetUrl = this._itemsCreateUrl(this.restUrl, page, itemsPerPage);
+
+            httpGetAsync(targetUrl, loadGraphViz);
+
+            //"data" property must be an array, so it checks this.
+            if (!Array.isArray(this.data))
+                throw "LoadArrayBehaviour has a property 'data' that must be an array.";
+
+            var startIdx = itemsPerPage * (page - 1);
+            var endIdx = startIdx + itemsPerPage;
+            //if (endIdx > this.data.length)
+            //endIdx = this.data.length;
+
+            var arrSlice = this.data.slice(startIdx, endIdx);
+            //return { pageItems: arrSlice, totalItems: this.data.length };
+            return arrSlice;
+        },
+
+        /**
+         * Starting from a base url, this function creates another url
+         * with the parameter on the get.
+         * Note: override this function to be compatible with any other
+         * @param baseUrl
+         * @param page
+         * @param itemsXPage
+         * @returns {*}
+         * @private
+         */
+        _itemsCreateUrl: function(baseUrl, page, itemsXPage) {
+            var targetUrl = replaceUrlParam(baseUrl, "page", page);
+            targetUrl = replaceUrlParam(targetUrl, "itemsPerPage", itemsXPage);
+            return targetUrl;
+        },
+
+        handleDataChange: function() {
+            console.log("Data changed");
+        }
+
+    };
+</script>

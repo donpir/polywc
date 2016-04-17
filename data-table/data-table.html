@@ -162,12 +162,6 @@ The simplest way to use it is the following, which shows a table with three colu
                 showPager: 			{ type: Boolean, value: false },
                 itemsPerPage:       { type: Number, value: 5 },
 
-                //TODO: check if they need to be removed.
-                dataUrl:            { type: String, value: undefined },
-                serviceEditUrl:     { type: String, value: undefined },
-                _numSelectedItems:  { type: Number, value: 0 },
-                
-                //response: 			{ type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
 
                 showControls: 		{ type: Boolean, value: false },
                 showCtrlView:		{ type: Boolean, value: false }
@@ -199,27 +193,31 @@ The simplest way to use it is the following, which shows a table with three colu
                 _checked ?  _selectedRow.classList.add('tblrowselected') : _selectedRow.classList.remove('tblrowselected');
             },
 
-            refresh: function() {
+            refreshPage: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
 
-                //Initialises the number of items within the pager.
-                $bottomPager.totItems = this.itemsCount();
+                if (typeof itemsPerPage === 'undefined')
+                    itemsPerPage = this.itemsPerPage;
 
-                //Loads the page content.
-                var curPage = $bottomPager.curPage;
-                var itemsPerPage = $bottomPager.itemsPerPage;
-                this._loadPage(curPage, itemsPerPage);
+                //The loading of data is handled in async way. So,
+                //the following is the callback function, which renders
+                //data within the html page.
+                var $wc = this;
+                function showRecordCallback(record) {
+                    //Provides the data to the web component.
+                    $wc.fieldsData = record.pageItems;
+                    $bottomPager.curPage = record.targetPage;
+                    $wc.$._numSelectedItems = 0;
+
+                    //Initialises the number of items within the pager.
+                    $bottomPager.totItems = record.totalItems;
+                };
+
+                this.itemsLoad(targetPage, itemsPerPage, showRecordCallback);
             },
 
             goToPage: function(evt, details) {
-                this._loadPage(details.targetPage, details.itemsPerPage);
-            },
-
-            _loadPage: function(targetPage, itemsPerPage) {
-                var arrData = this.itemsLoad(targetPage, itemsPerPage);
-                this.fieldsData = arrData;
-                this.$$('#bottomPager').curPage = targetPage;
-                this.$._numSelectedItems = 0;
+                this.refreshPage(details.targetPage, details.itemsPerPage);
             },
 
             handleEdit: function(evt) {

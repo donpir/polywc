@@ -26,15 +26,18 @@
         ];
     </script>
 
+
+
     <data-table id="tblBooks" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
+
                 show-pager
             ></data-table>
 
     <script type="text/javascript">
         var $tblBooks = document.querySelector("#tblBooks");
         $tblBooks.data = books;
-        $tblBooks.refreshPage(1);
+        $tblBooks.refresh();
     </script>
 
 </body>

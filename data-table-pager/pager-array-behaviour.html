@@ -21,8 +21,9 @@
     **/
 
     PagerArrayBehaviour = {
+
         properties: {
-            data: { type: Object, value: undefined, notify: true, observer: 'handleDataChange' }
+            data: { type: Object, value: undefined, notify: true }
         },
 
         itemsCount: function() {
@@ -34,9 +35,9 @@
         /**
          * @param page is a number greater then one.
          * @param itemsPerPage
-         * @returns {Array.<T>|string|Blob}
+         * @returns {{pageItems: (Array.<T>|string|Blob), totalItems: *}}
          */
-        itemsLoad: function(page, itemsPerPage) {
+        itemsLoad: function(page, itemsPerPage, callback) {
             //"data" property must be an array, so it checks this.
             if (!Array.isArray(this.data))
                 throw "LoadArrayBehaviour has a property 'data' that must be an array.";
@@ -47,12 +48,12 @@
                 //endIdx = this.data.length;
 
             var arrSlice = this.data.slice(startIdx, endIdx);
-            //return { pageItems: arrSlice, totalItems: this.data.length };
-            return arrSlice;
-        },
+            var record = { targetPage: page, pageItems: arrSlice, totalItems: this.data.length };
 
-        handleDataChange: function() {
-            console.log("Data changed");
+            if (typeof callback === 'function')
+                callback(record);//Calls the callback for async behaviour.
+
+            return record;
         }
 
     };
