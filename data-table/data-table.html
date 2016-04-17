@@ -112,7 +112,7 @@ The simplest way to use it is the following, which shows a table with three colu
                         <div id="tblfootercaption"></div>
                         <div class="flexchild right">
                             <paper-fab mini icon="icons:delete" on-click="handleDeleteClick" style="display: none;"></paper-fab>
-                            <data-table-pager id="bottomPager" show-page-label tot-items="7"></data-table-pager>
+                            <data-table-pager id="bottomPager" show-page-label></data-table-pager>
                         </div>
                     </div>
                 </th>
@@ -166,7 +166,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 headers:            { type: Array, value: undefined },
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
-                fieldsData:         { type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
+                fieldsData:         { type: Object, value: undefined, notify: false },
 
                 //Rendering options.
                 showPager: 			{ type: Boolean, value: false },
@@ -178,7 +178,6 @@ The simplest way to use it is the following, which shows a table with three colu
                 _numSelectedItems:  { type: Number, value: 0 },
                 
                 //response: 			{ type: Object, value: undefined, notify: true, observer: 'handleResponseChange' },
-
 
                 showControls: 		{ type: Boolean, value: false },
                 showCtrlView:		{ type: Boolean, value: false }
@@ -198,10 +197,6 @@ The simplest way to use it is the following, which shows a table with three colu
             listeners: {
                 'data-table-pager-go-to-event': 'goToPage'
             },
-
-            handleResponseChange: function() {
-            	console.log("ciao");	
-            },
             
             handleCheck: function(evt) {
                 var _id = evt.target.id;
@@ -216,6 +211,11 @@ The simplest way to use it is the following, which shows a table with three colu
 
             refresh: function() {
                 var $bottomPager = this.$$('#bottomPager');
+
+                //Initialises the number of items within the pager.
+                $bottomPager.totItems = this.itemsCount();
+
+                //Loads the page content.
                 var curPage = $bottomPager.curPage;
                 var itemsPerPage = $bottomPager.itemsPerPage;
                 this._loadPage(curPage, itemsPerPage);
@@ -226,7 +226,7 @@ The simplest way to use it is the following, which shows a table with three colu
             },
 
             _loadPage: function(targetPage, itemsPerPage) {
-                var arrData = this.load(targetPage, itemsPerPage);
+                var arrData = this.itemsLoad(targetPage, itemsPerPage);
                 this.fieldsData = arrData;
                 this.$$('#bottomPager').curPage = targetPage;
                 this.$._numSelectedItems = 0;

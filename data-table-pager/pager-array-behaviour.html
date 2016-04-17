@@ -25,12 +25,18 @@
             data: { type: Object, value: undefined, notify: true, observer: 'handleDataChange' }
         },
 
+        itemsCount: function() {
+            if (typeof this.data === 'undefined')
+                return 0;
+            return this.data.length;
+        },
+
         /**
          * @param page is a number greater then one.
          * @param itemsPerPage
          * @returns {Array.<T>|string|Blob}
          */
-        load: function(page, itemsPerPage) {
+        itemsLoad: function(page, itemsPerPage) {
             //"data" property must be an array, so it checks this.
             if (!Array.isArray(this.data))
                 throw "LoadArrayBehaviour has a property 'data' that must be an array.";
