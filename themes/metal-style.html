@@ -58,11 +58,18 @@
                 padding-right: 4px;
             }
 
-            table tbody tr:hover {
+            /* Body: rows alternate colours */
+            table tbody tr:nth-child(odd) {
                 background-color: #FFF8E1;
+            }
+
+            /* Body: rows mouse hover */
+            table tbody tr:hover {
+                background-color: #FFE082;
                 cursor: pointer;
                 cursor: hand;
             }
+
 
         </style>
     </template>
