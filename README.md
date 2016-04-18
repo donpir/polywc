@@ -1,6 +1,6 @@
 # Polywc
 
-A set of custom reusable Web-Components build upon Polymer. Polywc library provides the following web-components:
+A set of custom reusable Web-Components built using [Polymer 1.0](https://www.polymer-project.org/1.0/). Polywc library provides the following web-components:
 
  - HTML Table that supports the multi-page;
  
