@@ -90,7 +90,7 @@ The simplest way to use it is the following, which shows a table with three colu
                         <paper-icon-button id="delete_{{dataRow.id}}" icon="icons:delete" on-click="handleDelete"></paper-icon-button>
                         </template>
                         
-                        <template is="dom-if" if="showCtrlView">
+                        <template is="dom-if" if="{{showCtrlView}}">
                         <paper-icon-button id="details_{{computeFieldValue(dataRow, fieldId)}}" icon="icons:visibility" on-click="handleViewDetails"></paper-icon-button>
                         </template>
                     </td>
