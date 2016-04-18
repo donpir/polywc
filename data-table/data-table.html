@@ -60,41 +60,17 @@ The simplest way to use it is the following, which shows a table with three colu
         <table class="ui compact celled striped table">
             <thead id="tblheader">
                 <tr>
-                	<template is="dom-if" if="{{showControls}}">
-                    	<th id="tblheadercheckboxes"></th>
-                    </template>
                     <template is="dom-repeat" items="{{headers}}">
                         <th>{{item}}</th>
                     </template>
-                    <th id="tblheaderoptions">
-                    	<!--<template is="dom-if" if="{{showPager}}">
-                        <data-table-pager id="topPager" tot-items="7"></data-table-pager>
-                        </template>-->
-                    </th>
                 </tr>
             </thead>
             <tbody id="tblbody">
                 <template is="dom-repeat" items="{{fieldsData}}" as="dataRow">
                 <tr id="{{dataRow.id}}">
-                	<template is="dom-if" if="{{showControls}}">
-                    <td><paper-checkbox id="{{dataRow.id}}" on-change="handleCheck"></paper-checkbox></td>
-                    </template>
                     <template is="dom-repeat" items="{{fields}}" as="fieldKey">
                     <td>{{computeFieldValue(dataRow, fieldKey)}}</td>
                     </template>
-                    
-                    <td class="colCenter">
-                    	<template is="dom-if" if="{{showControls}}">
-                        <a href="{{ computeComposeUrl(serviceEditUrl, 'id', dataRow.id) }}">Edit</a>
-                        <paper-icon-button id="edit_{{dataRow.id}}" icon="editor:mode-edit" on-click="handleEdit"></paper-icon-button>
-                        <paper-icon-button id="delete_{{dataRow.id}}" icon="icons:delete" on-click="handleDelete"></paper-icon-button>
-                        </template>
-                        
-                        <template is="dom-if" if="{{showCtrlView}}">
-                        <paper-icon-button id="details_{{computeFieldValue(dataRow, fieldId)}}" icon="icons:visibility" on-click="handleViewDetails"></paper-icon-button>
-                        </template>
-                    </td>
-                    
                 </tr>
                 </template>
             </tbody>
@@ -160,11 +136,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
                 //Rendering options.
                 showPager: 			{ type: Boolean, value: false },
-                itemsPerPage:       { type: Number, value: 5 },
-
-
-                showControls: 		{ type: Boolean, value: false },
-                showCtrlView:		{ type: Boolean, value: false }
+                itemsPerPage:       { type: Number, value: 5 }
             },
 
             behaviors: [PagerArrayBehaviour],
