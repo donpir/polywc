@@ -190,21 +190,6 @@ The simplest way to use it is the following, which shows a table with three colu
 
             goToPage: function(evt, details) {
                 this.refreshPage(details.targetPage, details.itemsPerPage);
-            },
-
-            handleEdit: function(evt) {
-                var _id = evt.currentTarget.id;
-                this.fire('data-table-edit-item', _id );
-            },
-
-            handleDelete: function(evt) {
-                var _id = evt.currentTarget.id;
-                this.fire('data-table-delete-item', _id );
-            },
-            
-            handleViewDetails: function(evt) {
-            	var _id = evt.currentTarget.id;
-            	this.fire('data-table-view-item-details', _id );
             }
 
         });//#POLYMER.
