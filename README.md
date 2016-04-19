@@ -3,6 +3,8 @@
 A set of custom reusable Web-Components built using [Polymer 1.0](https://www.polymer-project.org/1.0/). Polywc library provides the following web-components:
 
  - HTML Table that supports the multi-page;
+
+The demo page is accessible [here](http://donpir.github.io/polywc).
  
 ## License 
 
