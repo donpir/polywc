@@ -32,36 +32,40 @@
         /**
          * @param page is a number greater then one.
          * @param itemsPerPage
-         * @returns {Array.<T>|string|Blob}
          */
-        itemsLoad: function(page, itemsPerPage, callbackShowRecord) {
-            var httpGetAsync = function(theUrl, callback) {
+        itemsLoad: function(page, itemsPerPage, externalCallback) {
+            var httpGetAsync = function(theUrl, internalCallback) {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200)
-                        callback(xhttp.responseText);
+                        internalCallback(xhttp.responseText, externalCallback);
                 };
                 xhttp.open("GET", theUrl, true); // true for asynchronous
                 xhttp.send(null);
             };//EndFunction.
 
+            debugger;
             //Creates the URL.
-            var targetUrl = this._itemsCreateUrl(this.restUrl, page, itemsPerPage);
+            var targetUrl = this.createTargetUrl(this.restUrl, page, itemsPerPage);
 
-            httpGetAsync(targetUrl, loadGraphViz);
+            httpGetAsync(targetUrl, this.processData);
+        },
 
-            //"data" property must be an array, so it checks this.
-            if (!Array.isArray(this.data))
-                throw "LoadArrayBehaviour has a property 'data' that must be an array.";
+        /**
+         * Starting from a base url, this function creates another url
+         * with the parameter on the get.
+         * Note: override this function to be compatible with any other
+         * @param baseUrl
+         * @param page
+         * @param itemsXPage
+         * @returns {a string with the service url}
+         */
+        createTargetUrl: function(baseUrl, page, itemsXPage) {
+            return this.restUrl;
+        },
 
-            var startIdx = itemsPerPage * (page - 1);
-            var endIdx = startIdx + itemsPerPage;
-            //if (endIdx > this.data.length)
-            //endIdx = this.data.length;
-
-            var arrSlice = this.data.slice(startIdx, endIdx);
-            //return { pageItems: arrSlice, totalItems: this.data.length };
-            return arrSlice;
+        processData: function(data, callback) {
+            throw { name: "MustBeImplemented" };
         },
 
         /**
@@ -74,11 +78,11 @@
          * @returns {*}
          * @private
          */
-        _itemsCreateUrl: function(baseUrl, page, itemsXPage) {
+        /*_itemsCreateUrl: function(baseUrl, page, itemsXPage) {
             var targetUrl = replaceUrlParam(baseUrl, "page", page);
             targetUrl = replaceUrlParam(targetUrl, "itemsPerPage", itemsXPage);
             return targetUrl;
-        }
+        }*/
 
     };
 </script>

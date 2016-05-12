@@ -31,6 +31,7 @@
 
     <!-- PolyWC components -->
     <link rel="import" href="../data-table/data-table.html">
+    <link rel="import" href="../data-table-pager/data-table-pager-rest-behaviour.html">
 
 </head>
 <body>
@@ -57,14 +58,15 @@
 
     <data-table id="tblBooks" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
-
-                show-pager
             ></data-table>
 
     <script type="text/javascript">
+        var dataurl = "https://data.issy.com/api/records/1.0/search/?dataset=entreprises-tic-issy&sort=nom&facet=sous_secteur&facet=membre_d_un_reseau";
+
         var $tblBooks = document.querySelector("#tblBooks");
+        $tblBooks.behaviors.unshift(PagerRestBehaviour);
         $tblBooks.data = books;
-        $tblBooks.refresh();
+        $tblBooks.refreshPage();
     </script>
 
 </body>
