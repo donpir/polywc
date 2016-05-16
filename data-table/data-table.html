@@ -132,6 +132,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
                 fieldsData:         { type: Object, value: undefined, notify: false },
+                prefixes:          { type: Array, value: undefined },
                 postfixes:          { type: Array, value: undefined },
 
                 //Rendering options.
@@ -143,6 +144,9 @@ The simplest way to use it is the following, which shows a table with three colu
 
             computeFieldValue: function(dataRow, fieldKey, index) {
             	var value = dataRow[fieldKey];
+
+                if (typeof this.prefixes !== 'undefined' && index <= this.prefixes.length - 1 )
+                    value = this.prefixes[index] + value;
 
                 if (typeof this.postfixes !== 'undefined' && index <= this.postfixes.length - 1 )
                     value += this.postfixes[index];
