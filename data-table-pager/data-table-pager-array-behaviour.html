@@ -57,6 +57,7 @@
             var csvContent = "data:text/csv;charset=utf-8,";
 
             var csvHeader = "";
+            var _fields = this.fields;
             this.fields.forEach(function(item, index) {
                 csvHeader += item + ";";
             });
@@ -66,10 +67,8 @@
             var dataLength = this.data.length;
             this.data.forEach(function(record, index){
                 var srow = "";
-                for (var key in record) {
-                    if (record.hasOwnProperty(key)) {
-                        srow += record[key] + ";";
-                    }
+                for (var i=0; i<_fields.length; i++) {
+                    srow += record[_fields[i]] + ";";
                 }
 
                 csvContent += index < dataLength ? srow + "\n" : srow;
