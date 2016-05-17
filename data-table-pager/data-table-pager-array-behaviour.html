@@ -51,7 +51,39 @@
                 callback(record);//Calls the callback for async behaviour.
 
             return record;
-        }
+        },//EndFunction.
+
+        handleExportCSV: function(evt) {
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var csvHeader = "";
+            this.fields.forEach(function(item, index) {
+                csvHeader += item + ";";
+            });
+            csvContent += csvHeader + "\n";
+
+            //Data row.
+            var dataLength = this.data.length;
+            this.data.forEach(function(record, index){
+                var srow = "";
+                for (var key in record) {
+                    if (record.hasOwnProperty(key)) {
+                        srow += record[key] + ";";
+                    }
+                }
+
+                csvContent += index < dataLength ? srow + "\n" : srow;
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "export.csv");
+
+            link.click(); // This will download the data file named "my_data.csv".
+        }//EndFunction.
 
     };
 </script>

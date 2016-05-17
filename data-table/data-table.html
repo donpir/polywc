@@ -29,6 +29,12 @@
 <link rel="import" href="../../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
 
+<link rel="import" href="../../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../paper-menu/paper-menu.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+
+<link rel="import" href="../../iron-icons/iron-icons.html">
+
 <!-- Include CUSTOM Web Components -->
 <link rel="import" href="../data-table-pager/data-table-pager.html">
 
@@ -62,6 +68,14 @@ The simplest way to use it is the following, which shows a table with three colu
                     <template is="dom-repeat" items="{{headers}}">
                         <th>{{item}}</th>
                     </template>
+                    <th>
+                        <paper-menu-button>
+                            <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
+                            <paper-menu class="dropdown-content">
+                                <paper-item on-click="handleExportCSV">Export CSV</paper-item>
+                            </paper-menu>
+                        </paper-menu-button>
+                    </th>
                 </tr>
             </thead>
             <tbody id="tblbody">
@@ -70,6 +84,7 @@ The simplest way to use it is the following, which shows a table with three colu
                     <template is="dom-repeat" items="{{fields}}" as="fieldKey">
                     <td>{{computeFieldValue(dataRow, fieldKey, index)}}</td>
                     </template>
+                    <td></td>
                 </tr>
                 </template>
             </tbody>
