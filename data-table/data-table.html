@@ -160,6 +160,8 @@ The simplest way to use it is the following, which shows a table with three colu
             computeFieldValue: function(dataRow, fieldKey, index) {
             	var value = dataRow[fieldKey];
 
+                if (typeof value === 'undefined') return "";
+                
                 if (typeof this.prefixes !== 'undefined' && index <= this.prefixes.length - 1 )
                     value = this.prefixes[index] + value;
 
