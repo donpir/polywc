@@ -58,7 +58,7 @@
 
             var csvHeader = "";
             var _fields = this.fields;
-            this.fields.forEach(function(item, index) {
+            this.headers.forEach(function(item, index) {
                 csvHeader += item + ";";
             });
             csvContent += csvHeader + "\n";
