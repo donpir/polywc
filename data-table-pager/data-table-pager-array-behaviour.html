@@ -68,7 +68,9 @@
             this.data.forEach(function(record, index){
                 var srow = "";
                 for (var i=0; i<_fields.length; i++) {
-                    srow += record[_fields[i]] + ";";
+                    var value = record[_fields[i]];
+                    if (typeof value === 'undefined') value = "";
+                    srow += value + ";";
                 }
 
                 csvContent += index < dataLength ? srow + "\n" : srow;
