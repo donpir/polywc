@@ -31,7 +31,6 @@
 
     <!-- PolyWC components -->
     <link rel="import" href="../data-table/data-table.html">
-    <link rel="import" href="../data-table-pager/data-table-pager-rest-behaviour.html">
 
 </head>
 <body>
@@ -64,7 +63,9 @@
         var dataurl = "https://data.issy.com/api/records/1.0/search/?dataset=entreprises-tic-issy&sort=nom&facet=sous_secteur&facet=membre_d_un_reseau";
 
         var $tblBooks = document.querySelector("#tblBooks");
+        $tblBooks.setBehaviour(PagerArrayBehaviour);
         $tblBooks.behaviors.unshift(PagerRestBehaviour);
+        $tblBooks._desugarBehaviors();
         $tblBooks.data = books;
         $tblBooks.refreshPage();
     </script>

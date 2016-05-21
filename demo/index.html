@@ -31,6 +31,7 @@
 
     <!-- PolyWC components -->
     <link rel="import" href="../data-table/data-table.html">
+    <link rel="import" href="../data-table/array-pager-data-source.html">
 
 </head>
 <body>
@@ -57,12 +58,16 @@
     <data-table id="tblBooks" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
                 postfixes='["", "", "", " y"]'
-                show-pager
-            ></data-table>
+                show-pager>
+        <array-pager-data-source id="dsArray"></array-pager-data-source>
+    </data-table>
 
     <script type="text/javascript">
         var $tblBooks = document.querySelector("#tblBooks");
-        $tblBooks.data = books;
+        var $dsArray = Polymer.dom($tblBooks).children[0];
+        //$tblBooks.setBehaviour(PagerArrayBehaviour);
+        //$tblBooks.data = books;
+        $dsArray.data = books;
         $tblBooks.refreshPage(1);
     </script>
 

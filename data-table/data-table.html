@@ -39,7 +39,6 @@
 <link rel="import" href="../data-table-pager/data-table-pager.html">
 
 <!-- Import behaviours -->
-<link rel="import" href="../data-table-pager/data-table-pager-array-behaviour.html">
 <link rel="import" href="../themes/metal-style.html">
 
 <!--
@@ -147,7 +146,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
                 fieldsData:         { type: Object, value: undefined, notify: false },
-                prefixes:          { type: Array, value: undefined },
+                prefixes:           { type: Array, value: undefined },
                 postfixes:          { type: Array, value: undefined },
 
                 //Rendering options.
@@ -155,7 +154,20 @@ The simplest way to use it is the following, which shows a table with three colu
                 itemsPerPage:       { type: Number, value: 5 }
             },
 
-            behaviors: [PagerArrayBehaviour],
+            /**
+             * Retrieves the data-source to manage data.
+             * @private
+             */
+            _getDataSource: function() {
+                var children = Polymer.dom(this).children;
+                for (var i= 0, dataSource; i<children.length && (dataSource = children[i]); i++) {
+                    if (dataSource.itemsLoad && typeof dataSource.itemsLoad === 'function') {
+                        return dataSource;
+                    }
+                }//EndFor.
+
+                return null;
+            },
 
             computeFieldValue: function(dataRow, fieldKey, index) {
             	var value = dataRow[fieldKey];
@@ -174,17 +186,6 @@ The simplest way to use it is the following, which shows a table with three colu
             computeComposeUrl: function(baseUrl, paramName, paramValue) {
                 return replaceUrlParam(baseUrl, paramName, paramValue);
             },
-
-            /*handleCheck: function(evt) {
-                var _id = evt.target.id;
-                var _checked = evt.target.checked;
-
-                this._numSelectedItems += _checked ? 1 : -1 ;
-                Polymer.dom(this.$.tblfootercaption).innerHTML = this._numSelectedItems > 0 ? this._numSelectedItems + " selezionati." : "";
-
-                var _selectedRow = Polymer.dom(this.$.tblbody).querySelector("tr[id='" + _id + "']");
-                _checked ?  _selectedRow.classList.add('tblrowselected') : _selectedRow.classList.remove('tblrowselected');
-            },*/
 
             refreshPage: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
@@ -206,7 +207,7 @@ The simplest way to use it is the following, which shows a table with three colu
                     $bottomPager.totItems = record.totalItems;
                 };
 
-                this.itemsLoad(targetPage, itemsPerPage, showRecordCallback);
+                this._getDataSource().itemsLoad(targetPage, itemsPerPage, showRecordCallback);
             },
 
             listeners: {
@@ -222,6 +223,10 @@ The simplest way to use it is the following, which shows a table with three colu
                 var rowId = tr.id;
                 var rowItem = this.fieldsData[tr.rowIndex - 1];
                 this.fire('data-table-item-clicked-event', { itemId: rowId, item: rowItem });
+            },
+
+            handleExportCSV: function (evt) {
+                this._getDataSource().exportCSV(this.headers, this.fields);
             }
 
         });//#POLYMER.
