@@ -1,10 +1,23 @@
-# Polywc
+# polywc-data-table
 
-A set of custom reusable Web-Components built using [Polymer 1.0](https://www.polymer-project.org/1.0/). Polywc library provides the following web-components:
+It is a custom reusable Web-Components html table built using [Polymer 1.0](https://www.polymer-project.org/1.0/). Polywc library provides the following features:
 
  - HTML Table that supports the multi-page;
+ - Data source from javascript array and restful service (very soon). 
+
+## Demo 
 
 The demo page is accessible [here](http://donpir.github.io/polywc).
+
+## Roadmap 
+
+Ongoing development features:
+
+ - Load data from a restful service.
+
+Planned future features:
+
+ - Material design style
  
 ## License 
 
