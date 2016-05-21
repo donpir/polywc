@@ -7,7 +7,7 @@ It is a custom reusable Web-Components html table built using [Polymer 1.0](http
 
 ## Demo 
 
-The demo page is accessible [here](http://donpir.github.io/polywc).
+The demo page is accessible [here](http://donpir.github.io/polywc-data-table).
 
 ## Roadmap 
 
