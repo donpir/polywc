@@ -5,19 +5,16 @@ It is a custom reusable Web-Components html table built using [Polymer 1.0](http
  - HTML Table that supports the multi-page;
  - Data source from javascript array and restful service (very soon). 
 
-## Demo 
-
-The demo page is accessible [here](http://donpir.github.io/polywc-data-table).
-
 ## Roadmap 
 
 Ongoing development features:
 
- - Load data from a restful service.
+ - Load data from a restful service;
+ - Create demo page at [here](http://donpir.github.io/polywc-data-table).
 
 Planned future features:
 
- - Material design style
+ - Material design style.
  
 ## License 
 
