@@ -36,7 +36,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 
 <!-- Include CUSTOM Web Components -->
-<link rel="import" href="data-table-pager.html">
+<link rel="import" href="polywc-data-table-pager.html">
 
 <!-- Import behaviours -->
 <link rel="import" href="themes/metal-style.html">
@@ -56,7 +56,7 @@ The simplest way to use it is the following, which shows a table with three colu
      </data-table>
 
 -->
-<dom-module is="data-table">
+<dom-module is="polywc-data-table">
     <template>
 
         <style is="custom-style" include="metal-style"></style>
@@ -94,8 +94,8 @@ The simplest way to use it is the following, which shows a table with three colu
                     <div id="tblfooter">
                         <div id="tblfootercaption"></div>
                         <div class="flexchild right">
-                            <paper-fab mini icon="icons:delete" on-click="handleDeleteClick" style="display: none;"></paper-fab>
-                            <data-table-pager id="bottomPager" show-page-label></data-table-pager>
+                            <!--<paper-fab mini icon="icons:delete" on-click="handleDeleteClick" style="display: none;"></paper-fab>-->
+                            <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
                         </div>
                     </div>
                 </th>
@@ -140,7 +140,8 @@ The simplest way to use it is the following, which shows a table with three colu
     </style>
     <script>
         Polymer({
-            is: "data-table",
+            is: "polywc-data-table",
+
             properties: {
                 headers:            { type: Array, value: undefined },
                 fieldId:            { type: String },
