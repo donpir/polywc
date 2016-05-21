@@ -228,7 +228,9 @@ The simplest way to use it is the following, which shows a table with three colu
             },
 
             handleExportCSV: function (evt) {
-                this._getDataSource().exportCSV(this.headers, this.fields);
+                var dataSource = this._getDataSource();
+                if (dataSource != null)
+                    dataSource.exportCSV(this.headers, this.fields);
             }
 
         });//#POLYMER.
