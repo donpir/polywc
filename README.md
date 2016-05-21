@@ -1,6 +1,6 @@
 # polywc-data-table
 
-It is a custom reusable Web-Components html table built using [Polymer 1.0](https://www.polymer-project.org/1.0/). Polywc library provides the following features:
+It is an HTML Table with pagination. It is a custom reusable Web-Component built using [Polymer 1.0](https://www.polymer-project.org/1.0/). It provides the following features:
 
  - HTML Table that supports the multi-page;
  - Data source from javascript array and restful service (very soon). 
