@@ -29,45 +29,37 @@
     <!-- POLYMER -->
     <link rel="import" href="../../polymer/polymer.html">
 
-    <!-- PolyWC components -->
+    <!-- POLYWC data table -->
     <link rel="import" href="../polywc-data-table.html">
+    <link rel="import" href="../polywc-data-source-rest.html">
 
 </head>
 <body>
-    <script type="text/javascript">
-        var books = [
-            { "id":"1",  "author":"Dan Brown", "title":"Digital Fortness", "year": 1998 },
-            { "id":"2",  "author":"Dan Brown", "title":"Angels & Demons", "year": 2000 },
-            { "id":"3",  "author":"Dan Brown", "title":"Deception point", "year": 2001},
-            { "id":"4",  "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003 },
-            { "id":"5",  "author":"Dan Brown", "title":"The Lost Symbol", "year": 2009 },
-            { "id":"6",  "author":"Dan Brown", "title":"Inferno", "year": 2013 },
 
-            { "id":"7",  "author":"J. K. Rowling", "title":"Harry Potter and the Philosopher's Stone", "year": 1997 },
-            { "id":"8",  "author":"J. K. Rowling", "title":"Harry Potter and the Chamber of Secrets", "year": 1998 },
-            { "id":"9",  "author":"J. K. Rowling", "title":"Harry Potter and the Prisoner of Azkaban", "year": 1999 },
-            { "id":"10", "author":"J. K. Rowling", "title":"Harry Potter and the Globlet of Fire", "year": 2000 },
-            { "id":"11", "author":"J. K. Rowling", "title":"Harry Potter and the Order of the Phoenix", "year": 2003 },
-            { "id":"12", "author":"J. K. Rowling", "title":"Harry Potter and the Half-Blood Prince", "year": 2005 },
-            { "id":"13", "author":"J. K. Rowling", "title":"Harry Potter and the Deathly Hallows", "year": 2007 }
-        ];
-    </script>
-
-
-
-    <data-table id="tblBooks" headers='["id", "Author", "Title", "Year"]'
+    <polywc-data-table id="tbl" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
-            ></data-table>
+                show-pager>
+        <polywc-data-source-rest id="ds"
+                base-url="https://data.dublinked.ie/api/action/datastore_search?resource_id=c0ad65f7-6000-4e0d-b972-275cf76d288b"
+                items-per-page-key="limit" item-offset-key="offset" post-process-data="fncPostProcessData">
+        </polywc-data-source-rest>
+    </polywc-data-table>
 
     <script type="text/javascript">
-        var dataurl = "https://data.issy.com/api/records/1.0/search/?dataset=entreprises-tic-issy&sort=nom&facet=sous_secteur&facet=membre_d_un_reseau";
+        function fncPostProcessData() {
+            alert("ciao");
+        }
+        /*var dataurl = "https://data.issy.com/api/records/1.0/search/?dataset=entreprises-tic-issy&sort=nom&facet=sous_secteur&facet=membre_d_un_reseau";
 
         var $tblBooks = document.querySelector("#tblBooks");
         $tblBooks.setBehaviour(PagerArrayBehaviour);
         $tblBooks.behaviors.unshift(PagerRestBehaviour);
         $tblBooks._desugarBehaviors();
         $tblBooks.data = books;
-        $tblBooks.refreshPage();
+        */
+
+        var $tbl = document.querySelector("#tbl");
+        $tbl.refresh(1);
     </script>
 
 </body>

@@ -188,7 +188,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 return replaceUrlParam(baseUrl, paramName, paramValue);
             },
 
-            refreshPage: function(targetPage, itemsPerPage) {
+            refresh: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
 
                 if (typeof itemsPerPage === 'undefined')
@@ -218,7 +218,7 @@ The simplest way to use it is the following, which shows a table with three colu
             },
 
             goToPage: function(evt, details) {
-                this.refreshPage(details.targetPage, details.itemsPerPage);
+                this.refresh(details.targetPage, details.itemsPerPage);
             },
 
             handleClickOnItem: function(evt) {
