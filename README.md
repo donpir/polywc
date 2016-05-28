@@ -5,16 +5,17 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
  - HTML Table that supports the multi-page;
  - Data source from javascript array and restful service (very soon). 
 
-## Roadmap 
+## Roadmap (last update May 28th, 2016)
 
 Ongoing development features:
 
- - Load data from a restful service;
+ - Material design style like;
  - Create demo page at [here](http://donpir.github.io/polywc-data-table).
 
 Planned future features:
 
- - Material design style.
+ - Load data from a restful service;
+ - Sorting of the columns.
  
 ## License 
 
