@@ -59,6 +59,9 @@
         */
 
         var $tbl = document.querySelector("#tbl");
+        $tbl._getDataSource().postProcessData = function () {
+            console.log("Hey");
+        };
         $tbl.refresh(1);
     </script>
 

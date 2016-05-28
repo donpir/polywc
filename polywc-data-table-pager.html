@@ -45,14 +45,6 @@ Example:
 <dom-module is="polywc-data-table-pager">
     <template>
         <style is="custom-style">
-            /*paper-icon-button.flatButton {
-                color: var(--paper-pink-500);
-                --paper-icon-button-ink-color: var(--paper-indigo-500);
-            }
-            paper-icon-button.flatButton:hover {
-                background-color: var(--paper-pink-500);
-                color: white;
-            }*/
 
             .flex {
                 @apply(--layout-horizontal);
@@ -70,18 +62,11 @@ Example:
             <div id="pageLabel" class="item textmiddle">{{label}}</div>
             <div><paper-icon-button id="pagerrightarrow" icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button></div>
         </div>
-
-        <!--<div class="ui right floated pagination menu">
-            <paper-icon-button id="pagerleftarrow" icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton"></paper-icon-button>
-
-            <span id="pageLabel" class="item">{{label}}</span>
-
-            <paper-icon-button id="pagerrightarrow" icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button>
-        </div>-->
     </template>
 
     <script>
         Polymer({
+
             is: "polywc-data-table-pager",
 
             properties: {
@@ -109,11 +94,8 @@ Example:
             },
 
             updateArrows: function(totItems, itemsPerPage, curPage) {
-                if (curPage == 1) this.$.pagerleftarrow.classList.add("disabled");
-                else this.$.pagerleftarrow.classList.remove("disabled");
-
-                if (this.isLastPage() == true) this.$.pagerrightarrow.classList.add("disabled");
-                else this.$.pagerrightarrow.classList.remove("disabled");
+                this.$.pagerleftarrow.disabled = (curPage == 1);
+                this.$.pagerrightarrow.disabled = (this.isLastPage() == true);
             },
 
             isLastPage: function() {
@@ -126,12 +108,12 @@ Example:
              **/
 
             goPrevPage: function() {
-                if (this.$.pagerleftarrow.classList.contains("disabled") == false)
+                if (this.$.pagerleftarrow.disabled == false)
                     this.fire('data-table-pager-go-to-event', { targetPage: this.curPage - 1, itemsPerPage: this.itemsPerPage } );
             },
 
             goNextPage: function() {
-                if (this.$.pagerrightarrow.classList.contains("disabled") == false)
+                if (this.$.pagerrightarrow.disabled == false)
                     this.fire('data-table-pager-go-to-event', { targetPage: this.curPage + 1, itemsPerPage: this.itemsPerPage } );
             }
 
