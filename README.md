@@ -9,14 +9,14 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
 
 Ongoing development features:
 
- - Material design style like;
- - Create demo page at [here](http://donpir.github.io/polywc-data-table);
- - provide developer guide on how to use basic polymer table features.
+ - material design style like;
+ - demo page at [here](http://donpir.github.io/polywc-data-table);
+ - developer guide on how to use basic polymer table features.
 
 Planned future features:
 
- - Load data from a restful service;
- - Sorting of the columns.
+ - load data from a restful service;
+ - sorting of the columns.
 
 Last roadmap update: _May 28th, 2016_
 
