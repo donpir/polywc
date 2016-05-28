@@ -5,7 +5,7 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
  - HTML Table that supports the multi-page;
  - Data source from javascript array and restful service (very soon). 
 
-## Roadmap (last update May 28th, 2016)
+## Roadmap
 
 Ongoing development features:
 
@@ -16,7 +16,9 @@ Planned future features:
 
  - Load data from a restful service;
  - Sorting of the columns.
- 
+
+Last roadmap update: _May 28th, 2016_
+
 ## License 
 
 The library has released with the LGPL license [link here](http://www.gnu.org/licenses/lgpl.html).
