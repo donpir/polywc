@@ -61,12 +61,10 @@ The simplest way to use it is the following, which shows a table with three colu
 
         <style is="custom-style" include="metal-style"></style>
 
-        <table class="ui compact celled striped table">
+        <table>
             <thead id="tblheader">
                 <tr>
-                    <template is="dom-repeat" items="{{headers}}">
-                        <th>{{item}}</th>
-                    </template>
+                    <th id="tblcaption">{{ caption }}</th>
                     <th>
                         <paper-menu-button>
                             <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
@@ -75,6 +73,12 @@ The simplest way to use it is the following, which shows a table with three colu
                             </paper-menu>
                         </paper-menu-button>
                     </th>
+                </tr>
+                <tr>
+                    <template is="dom-repeat" items="{{headers}}">
+                        <th>{{item}}</th>
+                    </template>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="tblbody">
@@ -143,7 +147,8 @@ The simplest way to use it is the following, which shows a table with three colu
             is: "polywc-data-table",
 
             properties: {
-                headers:            { type: Array, value: undefined },
+                caption:            { type: String, value: "" },
+                headers:            { type: Array, value: undefined, observer: '_headersChanged' },
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
                 fieldsData:         { type: Object, value: undefined, notify: false },
@@ -170,6 +175,10 @@ The simplest way to use it is the following, which shows a table with three colu
                 return null;
             },
 
+            /****************************************************************
+             **** COMPUTED VALUES.
+             ****************************************************************/
+
             computeFieldValue: function(dataRow, fieldKey, index) {
             	var value = dataRow[fieldKey];
 
@@ -184,9 +193,17 @@ The simplest way to use it is the following, which shows a table with three colu
                 return value;
             },
 
-            computeComposeUrl: function(baseUrl, paramName, paramValue) {
-                return replaceUrlParam(baseUrl, paramName, paramValue);
+            /****************************************************************
+             **** PROPERTY CHANGED EVENTS.
+             ****************************************************************/
+
+            _headersChanged: function(newValue, oldValue) {
+                this.$.tblcaption.setAttribute("colspan", newValue.length);
             },
+
+            /****************************************************************
+             **** WC INTERFACE FUNCTIONS.
+             ****************************************************************/
 
             refresh: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
