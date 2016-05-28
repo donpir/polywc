@@ -64,7 +64,7 @@ The simplest way to use it is the following, which shows a table with three colu
         <table>
             <thead id="tblheader">
                 <tr>
-                    <th id="tblcaption">{{ caption }}</th>
+                    <th id="tblcaption" class="caption">{{ caption }}</th>
                     <th>
                         <paper-menu-button>
                             <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
@@ -95,13 +95,7 @@ The simplest way to use it is the following, which shows a table with three colu
             <tfoot id="tblfoot">
             <tr>
                 <th colspan="100%">
-                    <div id="tblfooter">
-                        <div id="tblfootercaption"></div>
-                        <div class="flexchild right">
-                            <!--<paper-fab mini icon="icons:delete" on-click="handleDeleteClick" style="display: none;"></paper-fab>-->
-                            <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
-                        </div>
-                    </div>
+                    <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
                 </th>
             </tr>
             </tfoot>
@@ -134,9 +128,6 @@ The simplest way to use it is the following, which shows a table with three colu
 
         .tblrowselected { background-color: lightyellow; }
 
-        #tblfooter {
-            @apply(--layout-horizontal);
-        }
         .flexchild {
             @apply(--layout-flex);
         }
