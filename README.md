@@ -10,7 +10,8 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
 Ongoing development features:
 
  - Material design style like;
- - Create demo page at [here](http://donpir.github.io/polywc-data-table).
+ - Create demo page at [here](http://donpir.github.io/polywc-data-table);
+ - provide developer guide on how to use basic polymer table features.
 
 Planned future features:
 
