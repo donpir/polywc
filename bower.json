@@ -5,6 +5,9 @@
   "authors": [
     "Donato Pirozzi <donatopirozzi@gmail.com>"
   ],
+  "main": [
+    "polywc-data-table.html"
+  ],
   "license": "LGPL",
   "ignore": [
     "**/.*",
@@ -23,5 +26,8 @@
     "paper-menu": "PolymerElements/paper-menu#~1.2.2",
     "paper-menu-button": "PolymerElements/paper-menu-button#~1.1.0",
     "polymer": "Polymer/polymer#~1.4.0"
+  },
+  "devDependencies": {
+    "package": "~0.1.2"
   }
 }
