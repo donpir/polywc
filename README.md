@@ -6,7 +6,7 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
  - Data source from javascript array (and restful service soon);
  - Exporting in CSV of the table content;
  - demo page [here](http://donpir.github.io/polywc-data-table);
- - developer guide on how to use basic polymer table features available [here](https://github.com/donpir/polywc-data-table/wiki.
+ - developer guide on how to use basic polymer table features available [here](https://github.com/donpir/polywc-data-table/wiki).
 
 ## Roadmap
 
