@@ -67,11 +67,22 @@
         <polywc-data-source-array id="dsArray"></polywc-data-source-array>
     </polywc-data-table>
 
+    <p>
+        <span style="font-weight: bold">You have selected:</span>
+        <span id="msgTarget" style="font-style: italic">none</span>
+    </p>
+
     <script type="text/javascript">
         var $tblBooks = document.querySelector("#tblBooks");
         var $dsArray = Polymer.dom($tblBooks).children[0];
         $dsArray.data = books;
         $tblBooks.refresh(1);
+
+        $tblBooks.addEventListener('data-table-item-clicked-event', function (evt) {
+            var book = evt.detail.item;
+            var msgTarget = document.getElementById('msgTarget');
+            msgTarget.innerText = " the book (id#" + book.id + "),  " + book.title + " by " + book.author + " (" + book.year + ")";
+        });
     </script>
 
 </body>

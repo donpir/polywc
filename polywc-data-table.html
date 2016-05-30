@@ -232,7 +232,8 @@ The simplest way to use it is the following, which shows a table with three colu
             handleClickOnItem: function(evt) {
                 var tr = evt.currentTarget;
                 var rowId = tr.id;
-                var rowItem = this.fieldsData[tr.rowIndex - 1];
+                var rowIndex = evt.model.index; //Alternative tr.rowIndex - 2.
+                var rowItem = this.fieldsData[rowIndex];
                 this.fire('data-table-item-clicked-event', { itemId: rowId, item: rowItem });
             },
 
