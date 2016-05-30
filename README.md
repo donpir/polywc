@@ -36,7 +36,7 @@ The library has released with the LGPL license [link here](http://www.gnu.org/li
 
 Briefly with this license:
  
- - Freedom to modify and distribute modified copies of POLYWC-DATA-TABLE, distributing the source code and releasing it with the same LGPL license;
+ - Freedom to modify and distribute modified copies of _polywc-data-table_, distributing the source code and releasing it with the same LGPL license;
  - You can dynamically (not statically) link POLYWC-DATA-TABLE library in a proprietary software, keeping the JS files as they are.
 
 
