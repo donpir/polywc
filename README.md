@@ -15,8 +15,7 @@ Last release: polywc-data-table v0.3.2, _May 30th, 2016_
 
 Ongoing development features:
 
- -
- 
+ - customisation of layout and theme.
 
 Planned future features:
 
