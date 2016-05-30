@@ -25,6 +25,11 @@ Planned future features:
 
 Last roadmap update: _May 28th, 2016_
 
+## Supported and tested Browsers
+
+ - Chrome 50.0.2661.102 m
+ - Opera 37.0.2178.43
+
 ## License 
 
 The library has released with the LGPL license [link here](http://www.gnu.org/licenses/lgpl.html).
