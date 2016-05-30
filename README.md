@@ -11,7 +11,7 @@ It is an HTML Table with pagination. It is a custom reusable Web-Component built
 
 Last release: polywc-data-table v0.3.2, _May 30th, 2016_
 
-### Roadmap
+## Roadmap
 
 Ongoing development features:
 
@@ -24,12 +24,12 @@ Planned future features:
 
 Last roadmap update: _May 28th, 2016_
 
-### Supported and tested Browsers
+## Supported and tested Browsers
 
  - Chrome 50.0.2661.102 m
  - Opera 37.0.2178.43
 
-### Bugs, support and other issues
+## Bugs, support and other issues
 
 For any bug or enhancement suggestion please create a new issue using the GitHub [Isses tool](https://github.com/donpir/polywc-data-table/issues).
 
