@@ -29,6 +29,10 @@ Last roadmap update: _May 28th, 2016_
  - Chrome 50.0.2661.102 m
  - Opera 37.0.2178.43
 
+## Bugs, support and other issues
+
+For any bug or enhancement suggestion please create a new issue using the GitHub [Isses tool](https://github.com/donpir/polywc-data-table/issues).
+
 ## License 
 
 The library has released with the LGPL license [link here](http://www.gnu.org/licenses/lgpl.html).
