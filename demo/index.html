@@ -1,0 +1,89 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<!doctype html>
+
+<html>
+<head>
+    <!-- POLYMER -->
+    <link rel="import" href="../../polymer/polymer.html">
+
+    <!-- PolyWC components -->
+    <link rel="import" href="../polywc-data-table.html">
+    <link rel="import" href="../polywc-data-source-array.html">
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        var books = [
+            { "id":"1",  "author":"Dan Brown", "title":"Digital Fortness", "year": 1998 },
+            { "id":"2",  "author":"Dan Brown", "title":"Angels & Demons", "year": 2000 },
+            { "id":"3",  "author":"Dan Brown", "title":"Deception point", "year": 2001},
+            { "id":"4",  "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003 },
+            { "id":"5",  "author":"Dan Brown", "title":"The Lost Symbol", "year": 2009 },
+            { "id":"6",  "author":"Dan Brown", "title":"Inferno", "year": 2013 },
+            { "id":"7",  "author":"Dan Brown", "title": undefined, "year": undefined },
+
+            { "id":"8",  "author":"J. K. Rowling", "title":"Harry Potter and the Philosopher's Stone", "year": 1997 },
+            { "id":"9",  "author":"J. K. Rowling", "title":"Harry Potter and the Chamber of Secrets", "year": 1998 },
+            { "id":"10",  "author":"J. K. Rowling", "title":"Harry Potter and the Prisoner of Azkaban", "year": 1999 },
+            { "id":"11", "author":"J. K. Rowling", "title":"Harry Potter and the Globlet of Fire", "year": 2000 },
+            { "id":"12", "author":"J. K. Rowling", "title":"Harry Potter and the Order of the Phoenix", "year": 2003 },
+            { "id":"13", "author":"J. K. Rowling", "title":"Harry Potter and the Half-Blood Prince", "year": 2005 },
+            { "id":"14", "author":"J. K. Rowling", "title":"Harry Potter and the Deathly Hallows", "year": 2007 }
+        ];
+    </script>
+
+    <polywc-data-table id="tblBooks" caption="List of books" headers='["id", "Author", "Title", "Year"]'
+                field-id="id" fields='["id", "author", "title", "year"]'
+                postfixes='["", "", "", " y"]'
+                show-pager>
+        <polywc-data-source-array id="dsArray"></polywc-data-source-array>
+    </polywc-data-table>
+
+    <p>
+        <span style="font-weight: bold">You have selected:</span>
+        <span id="msgTarget" style="font-style: italic">none</span>
+    </p>
+
+    <script type="text/javascript">
+        var $tblBooks = document.querySelector("#tblBooks");
+        var $dsArray = Polymer.dom($tblBooks).children[0];
+        $dsArray.data = books;
+        $tblBooks.refresh(1);
+
+        $tblBooks.addEventListener('data-table-item-clicked-event', function (evt) {
+            var book = evt.detail.item;
+            var msgTarget = document.getElementById('msgTarget');
+            msgTarget.innerText = " the book (id#" + book.id + "),  " + book.title + " by " + book.author + " (" + book.year + ")";
+        });
+    </script>
+
+</body>
+</html>

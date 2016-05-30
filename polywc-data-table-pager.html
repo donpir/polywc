@@ -1,0 +1,123 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<!-- Polymer libraries -->
+<link rel="import" href="../polymer/polymer.html">
+
+<!-- Polymer web-components -->
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/hardware-icons.html">
+
+<!--
+
+`polywc-pager` is a simple pager component, showing left and right arrows. The aim is
+to move to previous and next page in set of multiple pages.
+
+Examples of uses:
+    * a table of many paged items have a polywc-pager to change the current visible page.
+
+Example:
+    * <polywc-pager tot-items="7"></polywc-pager>
+
+-->
+<dom-module is="polywc-data-table-pager">
+    <template>
+        <style is="custom-style">
+
+            .flex {
+                @apply(--layout-horizontal);
+            }
+
+            div .textmiddle {
+                padding: 8px;
+                vertical-align: middle;
+            }
+
+        </style>
+
+        <div class="container flex">
+            <div><paper-icon-button id="pagerleftarrow" icon="hardware:keyboard-arrow-left" title="Previous page" class="flatButton" on-click="goPrevPage"></paper-icon-button></div>
+            <div id="pageLabel" class="item textmiddle">{{label}}</div>
+            <div><paper-icon-button id="pagerrightarrow" icon="hardware:keyboard-arrow-right" title="Next page" class="flatButton" on-click="goNextPage"></paper-icon-button></div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: "polywc-data-table-pager",
+
+            properties: {
+                totItems: { type: Number, value: 0 /*, observer: 'totItemsChanged'*/ },
+                itemsPerPage: { type: Number, value: 5 /*, observer: 'itemsPerPageChanged'*/  },
+                curPage: { type: Number, value: 1 /*, observer: 'curPageChanged'*/ },
+                label: { type: String, computed: 'computeLabel(totItems, itemsPerPage, curPage)'},
+                showPageLabel: { type: Boolean, value: false,  observer: 'showPageLabelChanged' }
+            },
+
+            observers: [
+                'updateArrows(totItems, itemsPerPage, curPage)'
+            ],
+
+            computeLabel: function(totItems, itemsPerPage, curPage) {
+                var _lowerBound = (curPage - 1) * itemsPerPage + 1;
+                var _upperBound = curPage * itemsPerPage;
+                if (_upperBound > totItems) _upperBound = totItems;
+                return  _lowerBound + '-' + _upperBound + ' di ' + this.totItems;
+            },
+
+            showPageLabelChanged: function() {
+                var displayValue = this.showPageLabel ? 'block' : 'none';
+                this.$.pageLabel.style.display = displayValue;
+            },
+
+            updateArrows: function(totItems, itemsPerPage, curPage) {
+                this.$.pagerleftarrow.disabled = (curPage == 1);
+                this.$.pagerrightarrow.disabled = (this.isLastPage() == true);
+            },
+
+            isLastPage: function() {
+                var totPages = Math.ceil(this.totItems / this.itemsPerPage);
+                return this.curPage == totPages;
+            },
+
+            /**
+             **  GUI User Driven Events
+             **/
+
+            goPrevPage: function() {
+                if (this.$.pagerleftarrow.disabled == false)
+                    this.fire('data-table-pager-go-to-event', { targetPage: this.curPage - 1, itemsPerPage: this.itemsPerPage } );
+            },
+
+            goNextPage: function() {
+                if (this.$.pagerrightarrow.disabled == false)
+                    this.fire('data-table-pager-go-to-event', { targetPage: this.curPage + 1, itemsPerPage: this.itemsPerPage } );
+            }
+
+        });
+    </script>
+
+</dom-module>
