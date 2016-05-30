@@ -1,0 +1,72 @@
+{
+   "help":"http://data.dublinked.ie/api/3/action/help_show?name=datastore_search",
+   "success":true,
+   "result":{
+      "resource_id":"c0ad65f7-6000-4e0d-b972-275cf76d288b",
+      "fields":[
+         {
+            "type":"int4",
+            "id":"_id"
+         },
+         {
+            "type":"text",
+            "id":"Quarter"
+         },
+         {
+            "type":"text",
+            "id":"National Unemployment Rate SA (%)"
+         },
+         {
+            "type":"text",
+            "id":"Dublin Unemployment Rate SA (%)"
+         },
+         {
+            "type":"numeric",
+            "id":"Dublin Employed SA (000)"
+         }
+      ],
+      "records":[
+         {
+            "Dublin Employed SA (000)":"480.4",
+            "Quarter":"Q1 98",
+            "_id":1,
+            "National Unemployment Rate SA (%)":"8.50%",
+            "Dublin Unemployment Rate SA (%)":"7.60%"
+         },
+         {
+            "Dublin Employed SA (000)":"484.3",
+            "Quarter":"Q2 98",
+            "_id":2,
+            "National Unemployment Rate SA (%)":"7.50%",
+            "Dublin Unemployment Rate SA (%)":"7.10%"
+         },
+         {
+            "Dublin Employed SA (000)":"492.9",
+            "Quarter":"Q3 98",
+            "_id":3,
+            "National Unemployment Rate SA (%)":"7.00%",
+            "Dublin Unemployment Rate SA (%)":"6.60%"
+         },
+         {
+            "Dublin Employed SA (000)":"496.8",
+            "Quarter":"Q4 98",
+            "_id":4,
+            "National Unemployment Rate SA (%)":"6.40%",
+            "Dublin Unemployment Rate SA (%)":"5.60%"
+         },
+         {
+            "Dublin Employed SA (000)":"505.2",
+            "Quarter":"Q1 99",
+            "_id":5,
+            "National Unemployment Rate SA (%)":"6.10%",
+            "Dublin Unemployment Rate SA (%)":"5.20%"
+         }
+      ],
+      "_links":{
+         "start":"/api/action/datastore_search?limit=5&resource_id=c0ad65f7-6000-4e0d-b972-275cf76d288b",
+         "next":"/api/action/datastore_search?offset=5&limit=5&resource_id=c0ad65f7-6000-4e0d-b972-275cf76d288b"
+      },
+      "limit":5,
+      "total":72
+   }
+}

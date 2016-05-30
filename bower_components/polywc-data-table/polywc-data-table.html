@@ -1,0 +1,248 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<!-- POLYMER libraries -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<!-- Include CUSTOM Web Components -->
+<link rel="import" href="polywc-data-table-pager.html">
+
+<!-- Import behaviours -->
+<link rel="import" href="themes/metal-style.html">
+
+<!--
+
+`data-table` is a simple web-component table, showing headers and data as well as controls.
+
+The web-component can be used in two ways: statically or dynamically.
+
+The simplest way to use it is the following, which shows a table with three columns:
+
+     <data-table headers='["id", "Author", "Title", "Year"]'
+                field-id="id" fields='["id", "author", "title", "year"]'
+                fields-data='[ {"id":"1", "author":"Dan Brown", "title":"The Da Vinci Code", "year": 2003},
+                               {"id":"1", "author":"Dan Brown", "title":"Deception point", "year": 2001} ]'>
+     </data-table>
+
+-->
+<dom-module is="polywc-data-table">
+    <template>
+
+        <style is="custom-style" include="metal-style"></style>
+
+        <table>
+            <thead id="tblheader">
+                <tr>
+                    <th id="tblcaption" class="caption">{{ caption }}</th>
+                    <th>
+                        <paper-menu-button>
+                            <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
+                            <paper-menu class="dropdown-content">
+                                <paper-item on-click="handleExportCSV">Export CSV</paper-item>
+                            </paper-menu>
+                        </paper-menu-button>
+                    </th>
+                </tr>
+                <tr>
+                    <template is="dom-repeat" items="{{headers}}">
+                        <th>{{item}}</th>
+                    </template>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tblbody">
+                <template is="dom-repeat" items="{{fieldsData}}" as="dataRow">
+                <tr id="{{dataRow.id}}" on-click="handleClickOnItem">
+                    <template is="dom-repeat" items="{{fields}}" as="fieldKey">
+                    <td>{{computeFieldValue(dataRow, fieldKey, index)}}</td>
+                    </template>
+                    <td></td>
+                </tr>
+                </template>
+            </tbody>
+            <template is="dom-if" if="{{showPager}}">
+            <tfoot id="tblfoot">
+            <tr>
+                <th colspan="100%">
+                    <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
+                </th>
+            </tr>
+            </tfoot>
+            </template>
+        </table>
+
+    </template>
+    <style>
+
+        #tblheadercheckboxes { width: 8px; }
+        #tblheaderoptions { width: 16px; }
+
+        paper-icon-button {
+            height: 24px;
+            width: 24px;
+            padding: 2px 2px 2px 2px;
+            margin: 0px 0px 0px 0px;
+        }
+
+        #tblfootercontrols {
+            text-align: right;
+        }
+
+        paper-fab {
+            display: inline-flex;
+        }
+
+        .colCenter { text-align: center; }
+        .right { text-align: right; }
+
+        .tblrowselected { background-color: lightyellow; }
+
+        .flexchild {
+            @apply(--layout-flex);
+        }
+
+    </style>
+    <script>
+        Polymer({
+            is: "polywc-data-table",
+
+            properties: {
+                caption:            { type: String, value: "" },
+                headers:            { type: Array, value: undefined, observer: '_headersChanged' },
+                fieldId:            { type: String },
+                fields:             { type: Array, value: undefined },
+                fieldsData:         { type: Object, value: undefined, notify: false },
+                prefixes:           { type: Array, value: undefined },
+                postfixes:          { type: Array, value: undefined },
+
+                //Rendering options.
+                showPager: 			{ type: Boolean, value: false },
+                itemsPerPage:       { type: Number, value: 5 }
+            },
+
+            /**
+             * Retrieves the data-source to manage data.
+             * @private
+             */
+            _getDataSource: function() {
+                var children = Polymer.dom(this).children;
+                for (var i= 0, dataSource; i<children.length && (dataSource = children[i]); i++) {
+                    if (dataSource.itemsLoad && typeof dataSource.itemsLoad === 'function') {
+                        return dataSource;
+                    }
+                }//EndFor.
+
+                return null;
+            },
+
+            /****************************************************************
+             **** COMPUTED VALUES.
+             ****************************************************************/
+
+            computeFieldValue: function(dataRow, fieldKey, index) {
+            	var value = dataRow[fieldKey];
+
+                if (typeof value === 'undefined') return "";
+
+                if (typeof this.prefixes !== 'undefined' && index <= this.prefixes.length - 1 )
+                    value = this.prefixes[index] + value;
+
+                if (typeof this.postfixes !== 'undefined' && index <= this.postfixes.length - 1 )
+                    value += this.postfixes[index];
+
+                return value;
+            },
+
+            /****************************************************************
+             **** PROPERTY CHANGED EVENTS.
+             ****************************************************************/
+
+            _headersChanged: function(newValue, oldValue) {
+                this.$.tblcaption.setAttribute("colspan", newValue.length);
+            },
+
+            /****************************************************************
+             **** WC INTERFACE FUNCTIONS.
+             ****************************************************************/
+
+            refresh: function(targetPage, itemsPerPage) {
+                var $bottomPager = this.$$('#bottomPager');
+
+                if (typeof itemsPerPage === 'undefined')
+                    itemsPerPage = this.itemsPerPage;
+
+                //The loading of data is handled in async way. So,
+                //the following is the callback function, which renders
+                //data within the html page.
+                var $wc = this;
+                function showRecordCallback(record) {
+                    //Provides the data to the web component.
+                    $wc.fieldsData = record.pageItems;
+                    $bottomPager.curPage = record.targetPage;
+                    $wc.$._numSelectedItems = 0;
+
+                    //Initialises the number of items within the pager.
+                    $bottomPager.totItems = record.totalItems;
+                };
+
+                var dataSource = this._getDataSource();
+                if (dataSource != null)
+                    dataSource.itemsLoad(targetPage, itemsPerPage, showRecordCallback);
+            },
+
+            listeners: {
+                'data-table-pager-go-to-event': 'goToPage'
+            },
+
+            goToPage: function(evt, details) {
+                this.refresh(details.targetPage, details.itemsPerPage);
+            },
+
+            handleClickOnItem: function(evt) {
+                var tr = evt.currentTarget;
+                var rowId = tr.id;
+                var rowIndex = evt.model.index; //Alternative tr.rowIndex - 2.
+                var rowItem = this.fieldsData[rowIndex];
+                this.fire('data-table-item-clicked-event', { itemId: rowId, item: rowItem });
+            },
+
+            handleExportCSV: function (evt) {
+                var dataSource = this._getDataSource();
+                if (dataSource != null)
+                    dataSource.exportCSV(this.headers, this.fields);
+            }
+
+        });//#POLYMER.
+    </script>
+</dom-module>

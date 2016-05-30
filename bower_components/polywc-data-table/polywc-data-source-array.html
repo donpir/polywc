@@ -1,0 +1,98 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<!-- POLYMER libraries -->
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module is="polywc-data-source-array">
+    <template></template>
+    <script>
+        Polymer({
+            is: "polywc-data-source-array",
+
+            properties: {
+                data: { type: Object, value: undefined, notify: true }
+            },
+
+            /**
+             * @param page is a number greater then and equal to one (Page >= 1).
+             * @param itemsPerPage
+             */
+            itemsLoad: function(page, itemsPerPage, callback) {
+                //"data" property must be an array, so it checks this.
+                if (!Array.isArray(this.data))
+                    throw "LoadArrayBehaviour has a property 'data' that must be an array.";
+
+                var startIdx = itemsPerPage * (page - 1);
+                var endIdx = startIdx + itemsPerPage;
+                //if (endIdx > this.data.length)
+                //endIdx = this.data.length;
+
+                var arrSlice = this.data.slice(startIdx, endIdx);
+                var record = { targetPage: page, pageItems: arrSlice, totalItems: this.data.length };
+
+                if (typeof callback === 'function')
+                    callback(record);//Calls the callback for async behaviour.
+            },//EndFunction.
+
+            /**
+             * Exports the array content in csv format.
+             * @param headers The array of headers to display in the CSV file.
+             */
+            exportCSV: function(headers, fields) {
+                var csvContent = "data:text/csv;charset=utf-8,";
+
+                var csvHeader = "";
+                var _fields = fields;
+                headers.forEach(function(item, index) {
+                    csvHeader += item + ";";
+                });
+                csvContent += csvHeader + "\n";
+
+                //Data row.
+                var dataLength = this.data.length;
+                this.data.forEach(function(record, index){
+                    var srow = "";
+                    for (var i=0; i<_fields.length; i++) {
+                        var value = record[_fields[i]];
+                        if (typeof value === 'undefined') value = "";
+                        srow += value + ";";
+                    }
+
+                    csvContent += index < dataLength ? srow + "\n" : srow;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+
+
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "export.csv");
+
+                link.click(); // This will download the data file named "my_data.csv".
+            }//EndFunction.
+
+        });
+    </script>
+</dom-module>
