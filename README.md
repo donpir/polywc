@@ -1,11 +1,14 @@
 # polywc-data-table 
 
-It is an HTML Table with pagination. It is a custom reusable Web-Component built using [Polymer 1.0](https://www.polymer-project.org/1.0/). It provides the following features:
+It is an HTML Table with pagination. It is a custom reusable Web-Component built using [Polymer 1.0](https://www.polymer-project.org/1.0/). 
+
+Access to the DEMO page [here](http://donpir.github.io/polywc-data-table).
+
+It provides the following features:
 
  - HTML Table that supports the multi-page;
  - Data source from javascript array (and restful service soon);
  - Exporting in CSV of the table content;
- - demo page [here](http://donpir.github.io/polywc-data-table);
  - developer guide on how to use basic polymer table features available [here](https://github.com/donpir/polywc-data-table/wiki).
  
 __Last release__: polywc-data-table v0.3.2, _May 30th, 2016_
