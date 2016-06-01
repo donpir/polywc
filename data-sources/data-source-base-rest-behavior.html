@@ -1,0 +1,92 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC-DATA-TABLE library.
+
+    POLYWC-DATA-TABLE is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC-DATA-TABLE is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<script>
+    DataSourceBaseRestBehavior = {
+
+        properties: {
+            baseUrl:         { type: String, value: undefined },
+            pageKey:         { type: String, value: undefined }, //The number of page to display.
+            itemOffsetKey:   { type: String, value: undefined }, //The item number to start displaying.
+            itemsPerPageKey: { type: String, value: undefined },  //Maximum number of items per page.
+            postProcessData: { type: Function, value: undefined }
+        },
+
+
+        /**
+         * @param page is a number greater then and equal to one (Page >= 1).
+         * @param itemsPerPage
+         */
+        itemsLoad: function(page, itemsPerPage, externalCallback) {
+            var targetUrl = this.baseUrl;
+
+            if (typeof  this.pageKey !== 'undefined')
+                targetUrl = this._replaceUrlParam(targetUrl, this.pageKey, page);
+
+            if (typeof this.itemsPerPageKey !== 'undefined')
+                targetUrl = this._replaceUrlParam(targetUrl, this.itemsPerPageKey, itemsPerPage);
+
+            if (typeof this.itemOffsetKey !== 'undefined')
+                targetUrl = this._replaceUrlParam(targetUrl, this.itemOffsetKey, (page - 1)*itemsPerPage);
+
+            if (typeof this.postProcessData !== 'undefined') {
+                var request = { targetPage: page, targetUrl: targetUrl };
+                this._httpGetAsync(request, externalCallback);
+            }
+        },
+
+        /**
+         * It post-processes the content received from the server.
+         * @param responseContent
+         * @returns {json object}
+         */
+        postProcessData: function(response) {
+            response.pageItems = JSON.parse(response.responseText);
+            return response;
+        },
+
+        _httpGetAsync: function(request, externalCallback) {
+            var xhttp = new XMLHttpRequest();
+            var _this = this;
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    request.responseText = xhttp.responseText;
+                    var response = _this.postProcessData(request);
+                    externalCallback(response);
+                }
+            };
+            xhttp.open("GET", request.targetUrl, true); // true for asynchronous
+            xhttp.send(null);
+        },//EndFunction.
+
+        _replaceUrlParam: function(url, paramName, paramValue){
+            var pattern = new RegExp('\\b('+paramName+'=).*?(&|$)')
+            if(url.search(pattern)>=0){
+                return url.replace(pattern,'$1' + paramValue + '$2');
+            }
+            return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+        }//EndFunction.
+
+    };
+</script>

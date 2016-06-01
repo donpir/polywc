@@ -27,41 +27,26 @@
 <html>
 <head>
     <!-- POLYMER -->
-    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../../../polymer/polymer.html">
 
     <!-- POLYWC data table -->
-    <link rel="import" href="../polywc-data-table.html">
-    <link rel="import" href="../polywc-data-source-rest.html">
+    <link rel="import" href="../../polywc-data-table.html">
+    <link rel="import" href="data-source-ckan.html">
 
 </head>
 <body>
 
-    <polywc-data-table id="tbl" headers='["id", "Author", "Title", "Year"]'
-                field-id="id" fields='["id", "author", "title", "year"]'
+    <polywc-data-table id="tbl" headers='["ID", "Quarter", "Dublin Unemployment Rate SA (%)", "Dublin Unemployment Rate SA (%)"]'
+                field-id="id" fields='["_id", "Quarter", "National Unemployment Rate SA (%)", "Dublin Unemployment Rate SA (%)"]'
                 show-pager>
-        <polywc-data-source-rest id="ds"
+        <data-source-ckan id="ds"
                 base-url="https://data.dublinked.ie/api/action/datastore_search?resource_id=c0ad65f7-6000-4e0d-b972-275cf76d288b"
-                items-per-page-key="limit" item-offset-key="offset" post-process-data="fncPostProcessData">
-        </polywc-data-source-rest>
+                items-per-page-key="limit" item-offset-key="offset">
+        </data-source-ckan>
     </polywc-data-table>
 
     <script type="text/javascript">
-        function fncPostProcessData() {
-            alert("ciao");
-        }
-        /*var dataurl = "https://data.issy.com/api/records/1.0/search/?dataset=entreprises-tic-issy&sort=nom&facet=sous_secteur&facet=membre_d_un_reseau";
-
-        var $tblBooks = document.querySelector("#tblBooks");
-        $tblBooks.setBehaviour(PagerArrayBehaviour);
-        $tblBooks.behaviors.unshift(PagerRestBehaviour);
-        $tblBooks._desugarBehaviors();
-        $tblBooks.data = books;
-        */
-
         var $tbl = document.querySelector("#tbl");
-        $tbl._getDataSource().postProcessData = function () {
-            console.log("Hey");
-        };
         $tbl.refresh(1);
     </script>
 
