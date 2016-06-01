@@ -69,7 +69,9 @@ The simplest way to use it is the following, which shows a table with three colu
                         <paper-menu-button>
                             <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
                             <paper-menu class="dropdown-content">
-                                <paper-item on-click="handleExportCSV">Export CSV</paper-item>
+                                <template is="dom-if" if="{{exportCsv}}">
+                                    <paper-item on-click="handleExportCSV">Export CSV</paper-item>
+                                </template>
                             </paper-menu>
                         </paper-menu-button>
                     </th>
@@ -146,6 +148,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
                 //Rendering options.
                 showPager: 			{ type: Boolean, value: false },
+                exportCsv:          { type: Boolean, value: false },
                 itemsPerPage:       { type: Number, value: 5 }
             },
 
