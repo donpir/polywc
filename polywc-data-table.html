@@ -203,6 +203,9 @@ The simplest way to use it is the following, which shows a table with three colu
             refresh: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
 
+                if (typeof targetPage === 'undefined')
+                    targetPage = 1;
+
                 if (typeof itemsPerPage === 'undefined')
                     itemsPerPage = this.itemsPerPage;
 
