@@ -22,11 +22,11 @@ Supported and tested browsers are:
 
 Ongoing development features:
 
- - customisation of layout and theme.
+ - load data from a restful service;
 
 Planned future features:
 
- - load data from a restful service;
+ - customisation of layout and theme.
  - sorting of the columns.
 
 Last roadmap update: _May 28th, 2016_
