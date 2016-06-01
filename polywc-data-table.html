@@ -96,7 +96,7 @@ The simplest way to use it is the following, which shows a table with three colu
             <tr>
                 <th colspan="100%">
                     <template is="dom-if" if="{{showPager}}">
-                        <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
+                        <polywc-data-table-pager id="bottomPager" style="float: right;" show-page-label></polywc-data-table-pager>
                     </template>
                 </th>
             </tr>
@@ -158,7 +158,6 @@ The simplest way to use it is the following, which shows a table with three colu
              * Called after the element is attached to the document.
              */
             attached: function () {
-                console.log("x");
                 this.refresh();
             },
 
