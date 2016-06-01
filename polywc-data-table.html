@@ -95,7 +95,9 @@ The simplest way to use it is the following, which shows a table with three colu
             <tfoot id="tblfoot">
             <tr>
                 <th colspan="100%">
-                    <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
+                    <template is="dom-if" if="{{showPager}}">
+                        <polywc-data-table-pager id="bottomPager" show-page-label></polywc-data-table-pager>
+                    </template>
                 </th>
             </tr>
             </tfoot>
