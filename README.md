@@ -22,14 +22,12 @@ Supported and tested browsers are:
 
 ## Roadmap
 
-For the ongoing development features see the issues page.
+For the ongoing development features see the [isses](https://github.com/donpir/polywc-data-table/issues) page.
 
 Planned future features:
 
  - customisation of layout and theme.
  - sorting of the columns.
-
-Last roadmap update: _May 28th, 2016_
 
 ## Bugs, support and other issues
 
