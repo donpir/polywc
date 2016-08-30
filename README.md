@@ -7,11 +7,13 @@ Access to the DEMO page [here](http://donpir.github.io/polywc-data-table).
 It provides the following features:
 
  - HTML Table that supports the multi-page;
- - Data source from javascript array (and restful service soon);
+ - Data source from javascript array;
+ - Loading data from restful services;
+ - Crud icons: pencil icon to edit and bin icon to delete;
  - Exporting in CSV of the table content;
  - developer guide on how to use basic polymer table features available [here](https://github.com/donpir/polywc-data-table/wiki).
  
-__Last release__: polywc-data-table v0.3.2, _May 30th, 2016_
+__Last release__: polywc-data-table v0.3.3, _August 30th, 2016_
 
 Supported and tested browsers are:
 
@@ -20,9 +22,7 @@ Supported and tested browsers are:
 
 ## Roadmap
 
-Ongoing development features:
-
- - load data from a restful service;
+For the ongoing development features see the issues page.
 
 Planned future features:
 
