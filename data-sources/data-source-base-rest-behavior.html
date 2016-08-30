@@ -38,7 +38,7 @@
          * @param page is a number greater then and equal to one (Page >= 1).
          * @param itemsPerPage
          */
-        itemsLoad: function(page, itemsPerPage, externalCallback) {
+        itemsLoad: function(page, itemsPerPage, externalCallback, errorCallback) {
             var targetUrl = this.baseUrl;
 
             if (typeof  this.pageKey !== 'undefined')
@@ -52,7 +52,7 @@
 
             if (typeof this.postProcessData !== 'undefined') {
                 var request = { targetPage: page, targetUrl: targetUrl };
-                this._httpGetAsync(request, externalCallback);
+                this._httpGetAsync(request, externalCallback, errorCallback);
             }
         },
 
@@ -66,14 +66,18 @@
             return response;
         },
 
-        _httpGetAsync: function(request, externalCallback) {
+        _httpGetAsync: function(request, externalCallback, errorCallback) {
             var xhttp = new XMLHttpRequest();
             var _this = this;
             xhttp.onreadystatechange = function() {
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
-                    request.responseText = xhttp.responseText;
-                    var response = _this.postProcessData(request);
-                    externalCallback(response);
+                if (xhttp.readyState == 4) {
+                    if (xhttp.status == 200) {
+                        request.responseText = xhttp.responseText;
+                        var response = _this.postProcessData(request);
+                        externalCallback(response);
+                    } else {
+                        errorCallback(xhttp.statusText);
+                    }
                 }
             };
             xhttp.open("GET", request.targetUrl, true); // true for asynchronous

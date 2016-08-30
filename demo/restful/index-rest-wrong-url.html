@@ -1,0 +1,49 @@
+<!--
+
+    @license
+    Copyright (C) 2016 - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+    This file is part of POLYWC library.
+
+    POLYWC is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    POLYWC is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    Distributed under the GNU LGPL v3. For full terms see the file LICENSE.
+    License: http://www.gnu.org/licenses/lgpl.html LGPL version 3 or higher
+
+    Contributors:
+        - Donato Pirozzi (donatopirozzi[at]gmail[dot]com)
+
+-->
+
+<!doctype html>
+
+<html>
+<head>
+    <!-- POLYMER -->
+    <link rel="import" href="../../../polymer/polymer.html">
+
+    <!-- POLYWC data table -->
+    <link rel="import" href="../../polywc-data-table.html">
+    <link rel="import" href="data-source-ckan.html">
+
+</head>
+<body>
+
+    <polywc-data-table id="tbl" headers='["ID", "Quarter", "Dublin Unemployment Rate SA (%)", "Dublin Unemployment Rate SA (%)"]'
+                field-id="id" fields='["_id", "Quarter", "National Unemployment Rate SA (%)", "Dublin Unemployment Rate SA (%)"]'
+                show-pager>
+        <data-source-ckan id="ds"
+                base-url="XYZ"
+                items-per-page-key="limit" item-offset-key="offset">
+        </data-source-ckan>
+    </polywc-data-table>
+
+</body>
+</html>

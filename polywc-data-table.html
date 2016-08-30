@@ -33,6 +33,7 @@
 <link rel="import" href="../paper-menu/paper-menu.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
 
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/editor-icons.html">
@@ -68,12 +69,18 @@ The simplest way to use it is the following, which shows a table with three colu
                 margin: 0px;
                 width: 70px;
             }
+            .error {
+                color: red;
+            }
         </style>
 
         <table>
             <thead id="tblheader">
                 <tr>
-                    <th id="tblcaption" class="caption">{{ caption }}</th>
+                    <th id="tblcaption" class="caption">
+                        <span>{{ caption }}</span>
+                        <span id="msgToast" class="error" hidden="true">Error</span>
+                    </th>
                     <th>
                         <paper-menu-button>
                             <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
@@ -125,7 +132,6 @@ The simplest way to use it is the following, which shows a table with three colu
             </tfoot>
             </template>
         </table>
-
     </template>
     <style>
 
@@ -264,9 +270,14 @@ The simplest way to use it is the following, which shows a table with three colu
                     $bottomPager.totItems = record.totalItems;
                 };
 
+                function showErrorCallback(statusText) {
+                    $wc.$.msgToast.hidden = false;
+                    $wc.$.msgToast.innerText = "Cannot laod data (" + statusText + ").";
+                };
+
                 var dataSource = this._getDataSource();
                 if (dataSource != null)
-                    dataSource.itemsLoad(targetPage, itemsPerPage, showRecordCallback);
+                    dataSource.itemsLoad(targetPage, itemsPerPage, showRecordCallback, showErrorCallback);
             },
 
             listeners: {
