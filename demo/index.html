@@ -32,6 +32,7 @@
     <!-- PolyWC components -->
     <link rel="import" href="../polywc-data-table.html">
     <link rel="import" href="../polywc-data-source-array.html">
+    <link rel="import" href="../toolbars/crud-toolbar.html">
 
     <style>
         body {
@@ -63,8 +64,9 @@
     <polywc-data-table id="tblBooks" caption="List of books" headers='["id", "Author", "Title", "Year"]'
                 field-id="id" fields='["id", "author", "title", "year"]'
                 postfixes='["", "", "", " y"]'
-                show-pager export-csv>
+                show-pager export-csv show-edit-command show-delete-command>
         <polywc-data-source-array id="dsArray"></polywc-data-source-array>
+        <!--<crud-toolbar id="dataRowToolbar" class="dataRowToolbar"></crud-toolbar>-->
     </polywc-data-table>
 
     <p>
@@ -78,10 +80,22 @@
         $dsArray.data = books;
         $tblBooks.refresh();
 
-        $tblBooks.addEventListener('data-table-item-clicked-event', function (evt) {
+        $tblBooks.addEventListener('on-click', function (evt) {
             var book = evt.detail.item;
             var msgTarget = document.getElementById('msgTarget');
             msgTarget.innerText = " the book (id#" + book.id + "),  " + book.title + " by " + book.author + " (" + book.year + ")";
+        });
+
+        $tblBooks.addEventListener('on-delete', function (evt) {
+            var book = evt.detail.item;
+            var msgTarget = document.getElementById('msgTarget');
+            msgTarget.innerText = "DELETED the book (id#" + book.id + "),  " + book.title + " by " + book.author + " (" + book.year + ")";
+        });
+
+        $tblBooks.addEventListener('on-edit', function (evt) {
+            var book = evt.detail.item;
+            var msgTarget = document.getElementById('msgTarget');
+            msgTarget.innerText = "EDIT the book (id#" + book.id + "),  " + book.title + " by " + book.author + " (" + book.year + ")";
         });
     </script>
 
