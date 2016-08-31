@@ -263,11 +263,11 @@ The simplest way to use it is the following, which shows a table with three colu
                 function showRecordCallback(record) {
                     //Provides the data to the web component.
                     $wc.fieldsData = record.pageItems;
-                    $bottomPager.curPage = record.targetPage;
+                    if ($bottomPager != null) $bottomPager.curPage = record.targetPage;
                     $wc.$._numSelectedItems = 0;
 
                     //Initialises the number of items within the pager.
-                    $bottomPager.totItems = record.totalItems;
+                    if ($bottomPager != null) $bottomPager.totItems = record.totalItems;
                 };
 
                 function showErrorCallback(statusText) {
