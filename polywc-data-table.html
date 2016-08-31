@@ -268,6 +268,9 @@ The simplest way to use it is the following, which shows a table with three colu
 
                     //Initialises the number of items within the pager.
                     if ($bottomPager != null) $bottomPager.totItems = record.totalItems;
+
+                    //Hides any previous error message.
+                    $wc.$.msgToast.hidden = true;
                 };
 
                 function showErrorCallback(statusText) {
