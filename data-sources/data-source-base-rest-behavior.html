@@ -39,6 +39,11 @@
          * @param itemsPerPage
          */
         itemsLoad: function(page, itemsPerPage, externalCallback, errorCallback) {
+            //URL not provided.
+            if (this.baseUrl == null || typeof this.baseUrl === 'undefined') {
+                errorCallback("Malformed URL '" + this.baseUrl + "'");
+            }
+
             var targetUrl = this.baseUrl;
 
             if (typeof  this.pageKey !== 'undefined')
