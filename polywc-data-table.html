@@ -138,6 +138,10 @@ The simplest way to use it is the following, which shows a table with three colu
             <tr>
                 <th colspan="100%">
                     <template is="dom-if" if="{{showPager}}">
+                        <div id="bottomMessageBar" style="float: left; padding-top: 10px; display: none;">
+                            <iron-icon icon="icons:done-all"></iron-icon>
+                            <span id="lblCheckedItems"></span> selected.
+                        </div>
                         <polywc-data-table-pager id="bottomPager" style="float: right;" show-page-label></polywc-data-table-pager>
                     </template>
                 </th>
@@ -196,7 +200,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
                 //Item command.
                 checkable:          { type: Boolean, value: false },
-                checked:            { type: Array, value: [] },
+                checked:            { type: Object, value: {} },
 
                 showEditCommand:    { type: Boolean, value: false },
                 showDeleteCommand:  { type: Boolean, value: false },
@@ -353,6 +357,10 @@ The simplest way to use it is the following, which shows a table with three colu
                 var _item = event.currentTarget.item;
                 if (_item.checked) this.checked[_item.id] = _item; //Checked true, add item to hash map.
                 else delete this.checked[_item.id]; //Checked false, remove item from hash map.
+
+                var _numSelectedItems = Object.keys(this.checked).length;
+                this.$$('#bottomMessageBar').style.display = _numSelectedItems == 0 ? "none" : "block";
+                this.$$('#lblCheckedItems').innerHTML =  _numSelectedItems;
             }
 
         });//#POLYMER.
