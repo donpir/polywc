@@ -69,6 +69,11 @@ The simplest way to use it is the following, which shows a table with three colu
                 margin: 0px;
                 width: 70px;
             }
+
+            .columnChecks {
+                width: 25px;
+            }
+
             .error {
                 color: red;
             }
@@ -93,6 +98,9 @@ The simplest way to use it is the following, which shows a table with three colu
                     </th>
                 </tr>
                 <tr>
+                    <template is="dom-if" if="[[checkable]]">
+                        <th class="columnChecks"></th>
+                    </template>
                     <template is="dom-repeat" items="{{headers}}">
                         <th>{{item}}</th>
                     </template>
@@ -104,6 +112,11 @@ The simplest way to use it is the following, which shows a table with three colu
             <tbody id="tblbody">
                 <template is="dom-repeat" items="{{fieldsData}}" as="dataRow">
                 <tr id="{{dataRow.id}}" on-click="handleClickOnItem">
+                    <!-- cell with the checkbox -->
+                    <template is="dom-if" if="[[checkable]]">
+                        <td><paper-checkbox item="[[dataRow]]" checked="{{dataRow.checked}}" on-change="_handleOnCheck"></paper-checkbox></td>
+                    </template>
+
                     <template is="dom-repeat" items="{{fields}}" as="fieldKey">
                     <td>{{computeFieldValue(dataRow, fieldKey, index)}}</td>
                     </template>
@@ -182,6 +195,9 @@ The simplest way to use it is the following, which shows a table with three colu
                 itemsPerPage:       { type: Number, value: 5 },
 
                 //Item command.
+                checkable:          { type: Boolean, value: false },
+                checked:            { type: Array, value: [] },
+
                 showEditCommand:    { type: Boolean, value: false },
                 showDeleteCommand:  { type: Boolean, value: false },
                 showColumnCommands: { type: Boolean, computed: 'computeShowColumnCommands(showEditCommand, showDeleteCommand)' }
@@ -271,6 +287,11 @@ The simplest way to use it is the following, which shows a table with three colu
 
                     //Hides any previous error message.
                     $wc.$.msgToast.hidden = true;
+
+                    //Initialise the checked status.
+                    if ($wc.checkable)
+                        for (var i= 0, item; i<record.pageItems.length && (item = record.pageItems[i]); i++)
+                            item.checked = (item.id in $wc.checked);
                 };
 
                 function showErrorCallback(statusText) {
@@ -323,6 +344,15 @@ The simplest way to use it is the following, which shows a table with three colu
                 var $refid = evt.currentTarget.refid;
                 var $dataRow = evt.model.dataRow;
                 this.fire('on-edit', { itemId: $refid, item: $dataRow });
+            },
+
+            _handleOnCheck: function(event) {
+                if (!this.checkable) return;
+
+                //This function uses an has hmap (js array) to store checked items.
+                var _item = event.currentTarget.item;
+                if (_item.checked) this.checked[_item.id] = _item; //Checked true, add item to hash map.
+                else delete this.checked[_item.id]; //Checked false, remove item from hash map.
             }
 
         });//#POLYMER.
