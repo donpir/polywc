@@ -287,10 +287,14 @@ The simplest way to use it is the following, which shows a table with three colu
                     if ($bottomPager != null) {
                         var _targetPage = $wc.firstPageNumber == 0 ? record.targetPage+1 : record.targetPage;
                         $bottomPager.curPage = _targetPage;
-                        if ('itemsPerPage' in record) {
+
+                        var _itemsPerPage = ('itemsPerPage' in record) ? record.itemsPerPage : $wc.itemsPerPage;
+                        $bottomPager.itemsPerPage = _itemsPerPage;
+                        
+                        /*if ('itemsPerPage' in record) {
                             $bottomPager.itemsPerPage = record.itemsPerPage;
                             //$wc.itemsPerPage = record.itemsPerPage;
-                        }
+                        }*/
                     }
                     $wc.$._numSelectedItems = 0;
 
