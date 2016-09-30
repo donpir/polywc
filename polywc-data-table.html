@@ -283,7 +283,10 @@ The simplest way to use it is the following, which shows a table with three colu
                 function showRecordCallback(record) {
                     //Provides the data to the web component.
                     $wc.fieldsData = record.pageItems;
-                    if ($bottomPager != null) $bottomPager.curPage = record.targetPage;
+                    if ($bottomPager != null) {
+                        $bottomPager.curPage = record.targetPage;
+                        if ('itemsPerPage' in record) $bottomPager.itemsPerPage = record.itemsPerPage;
+                    }
                     $wc.$._numSelectedItems = 0;
 
                     //Initialises the number of items within the pager.
@@ -360,7 +363,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
                 var _numSelectedItems = Object.keys(this.checked).length;
                 this.$$('#bottomMessageBar').style.display = _numSelectedItems == 0 ? "none" : "block";
-                this.$$('#lblCheckedItems').innerHTML =  _numSelectedItems; 
+                this.$$('#lblCheckedItems').innerHTML =  _numSelectedItems;
             }
 
         });//#POLYMER.
