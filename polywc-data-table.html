@@ -37,6 +37,7 @@
 
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/editor-icons.html">
+<link rel="import" href="../iron-dropdown/iron-dropdown.html">
 
 <!-- Include CUSTOM Web Components -->
 <link rel="import" href="polywc-data-table-pager.html">
@@ -83,11 +84,12 @@ The simplest way to use it is the following, which shows a table with three colu
             <thead id="tblheader">
                 <tr>
                     <th id="tblcaption" class="caption">
-                        <span>{{ caption }}</span>
-                        <span id="msgToast" class="error" hidden="true">Error</span>
-                    </th>
-                    <th>
-                        <paper-menu-button>
+                        <div>
+                            <span>{{ caption }}</span>
+                            <span id="msgToast" class="error" hidden="true">Error</span>
+                        </div>
+
+                        <paper-menu-button style="position: fixed; top: 10px; right: 20px;">
                             <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
                             <paper-menu class="dropdown-content">
                                 <template is="dom-if" if="{{exportCsv}}">
