@@ -27,6 +27,9 @@
 
         properties: {
             baseUrl:         { type: String, value: undefined },
+
+            firstPageNumber: { type: Number,  value: 1 },
+
             pageKey:         { type: String, value: undefined }, //The number of page to display.
             itemOffsetKey:   { type: String, value: undefined }, //The item number to start displaying.
             itemsPerPageKey: { type: String, value: undefined },  //Maximum number of items per page.
@@ -45,15 +48,16 @@
             }
 
             var targetUrl = this.baseUrl;
+            var _targetPage = this.firstPageNumber == 0 ? page-1 : page;
 
             if (typeof  this.pageKey !== 'undefined')
-                targetUrl = this._replaceUrlParam(targetUrl, this.pageKey, page);
+                targetUrl = this._replaceUrlParam(targetUrl, this.pageKey, _targetPage);
 
             if (typeof this.itemsPerPageKey !== 'undefined')
                 targetUrl = this._replaceUrlParam(targetUrl, this.itemsPerPageKey, itemsPerPage);
 
             if (typeof this.itemOffsetKey !== 'undefined')
-                targetUrl = this._replaceUrlParam(targetUrl, this.itemOffsetKey, (page - 1)*itemsPerPage);
+                targetUrl = this._replaceUrlParam(targetUrl, this.itemOffsetKey, (_targetPage - 1)*itemsPerPage);
 
             if (typeof this.postProcessData !== 'undefined') {
                 var request = { targetPage: page, targetUrl: targetUrl };

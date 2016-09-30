@@ -197,7 +197,6 @@ The simplest way to use it is the following, which shows a table with three colu
                 showPager: 			{ type: Boolean, value: false },
                 exportCsv:          { type: Boolean, value: false },
                 itemsPerPage:       { type: Number,  value: 10 },
-                firstPageNumber:    { type: Number,  value: 1 },
 
                 //Item command.
                 checkable:          { type: Boolean, value: false },
@@ -272,7 +271,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 var $bottomPager = this.$$('#bottomPager');
 
                 if (typeof targetPage === 'undefined')
-                    targetPage = this.firstPageNumber;
+                    targetPage = 1;
 
                 if (typeof itemsPerPage === 'undefined')
                     itemsPerPage = this.itemsPerPage;
@@ -285,16 +284,10 @@ The simplest way to use it is the following, which shows a table with three colu
                     //Provides the data to the web component.
                     $wc.fieldsData = record.pageItems;
                     if ($bottomPager != null) {
-                        var _targetPage = $wc.firstPageNumber == 0 ? record.targetPage+1 : record.targetPage;
-                        $bottomPager.curPage = _targetPage;
+                        $bottomPager.curPage = record.targetPage;
 
                         var _itemsPerPage = ('itemsPerPage' in record) ? record.itemsPerPage : $wc.itemsPerPage;
                         $bottomPager.itemsPerPage = _itemsPerPage;
-                        
-                        /*if ('itemsPerPage' in record) {
-                            $bottomPager.itemsPerPage = record.itemsPerPage;
-                            //$wc.itemsPerPage = record.itemsPerPage;
-                        }*/
                     }
                     $wc.$._numSelectedItems = 0;
 
