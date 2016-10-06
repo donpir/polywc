@@ -34,6 +34,7 @@
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../paper-spinner/paper-spinner.html">
 
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/editor-icons.html">
@@ -78,6 +79,11 @@ The simplest way to use it is the following, which shows a table with three colu
             .error {
                 color: red;
             }
+
+            paper-spinner {
+                width: 15px;
+                height: 15px;
+            }
         </style>
 
         <table>
@@ -85,6 +91,7 @@ The simplest way to use it is the following, which shows a table with three colu
                 <tr>
                     <th id="tblcaption" class="caption" colspan="100%">
                         <div style="padding-top: 10px;">
+                            <paper-spinner id="spinner"></paper-spinner>
                             <span>{{ caption }}</span>
                             <span id="msgToast" class="error" hidden="true">Error</span>
 
@@ -267,6 +274,9 @@ The simplest way to use it is the following, which shows a table with three colu
 
             refresh: function(targetPage, itemsPerPage) {
                 var $bottomPager = this.$$('#bottomPager');
+                var $spinner = this.$.spinner;
+
+                $spinner.active = true;
 
                 if (typeof targetPage === 'undefined')
                     targetPage = 1;
@@ -299,6 +309,9 @@ The simplest way to use it is the following, which shows a table with three colu
                     if ($wc.checkable)
                         for (var i= 0, item; i<record.pageItems.length && (item = record.pageItems[i]); i++)
                             item.checked = (item.id in $wc.checked);
+
+                    //Deactive the spinner.
+                    $spinner.active = false;
                 };
 
                 function showErrorCallback(statusText) {
