@@ -211,6 +211,12 @@ The simplest way to use it is the following, which shows a table with three colu
                 checkable:          { type: Boolean, value: false },
                 checked:            { type: Object, value: {} },
 
+                /**
+                 * Retrieve the list of selected IDs in the table.
+                 * The IDs are pushed in the order of the selection.
+                 */
+                checkedIds:         { type: Array, value: [] },
+
                 showEditCommand:    { type: Boolean, value: false },
                 showDeleteCommand:  { type: Boolean, value: false },
                 showColumnCommands: { type: Boolean, computed: 'computeShowColumnCommands(showEditCommand, showDeleteCommand)' }
@@ -369,10 +375,20 @@ The simplest way to use it is the following, which shows a table with three colu
             _handleOnCheck: function(event) {
                 if (!this.checkable) return;
 
-                //This function uses an hash map (js array) to store checked items.
                 var _item = event.currentTarget.item;
-                if (_item.checked) this.checked[_item.id] = _item; //Checked true, add item to hash map.
-                else delete this.checked[_item.id]; //Checked false, remove item from hash map.
+                var _itemid = _item[this.fieldId];
+
+                //This function uses an hash map (js array) to store checked items.
+                //It also stores IDs of checked items in the array.
+                if (_item.checked) { //Checked true, add item to hash map.
+                    this.checked[_itemid] = _item;
+                    this.checkedIds.push( _itemid  );
+                } else { //Checked false, remove item from hash map.
+                    delete this.checked[_itemid];
+                    var _idx = this.checkedIds.indexOf(_itemid);
+                    if (_idx > -1)
+                        this.checkedIds.splice(_idx, 1);
+                }
 
                 var _numSelectedItems = Object.keys(this.checked).length;
                 this.$$('#bottomMessageBar').style.display = _numSelectedItems == 0 ? "none" : "block";
