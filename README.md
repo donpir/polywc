@@ -13,7 +13,7 @@ It provides the following features:
  - Exporting in CSV of the table content;
  - developer guide on how to use basic polymer table features available [here](https://github.com/donpir/polywc-data-table/wiki).
  
-__Last release__: polywc-data-table v0.3.3, _August 30th, 2016_
+__Last release__: polywc-data-table v0.3.5, _October 6th, 2016_
 
 Supported and tested browsers are:
 
