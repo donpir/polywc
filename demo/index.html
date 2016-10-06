@@ -61,14 +61,15 @@
         ];
     </script>
 
-    <polywc-data-table id="tblBooks" caption="List of books (author Dan Brown & Rowling)"
-                headers='["id", "Author", "Title", "Year"]'
-                field-id="id" fields='["id", "author", "title", "year"]'
-                postfixes='["", "", "", " y"]'
-                show-pager export-csv show-edit-command show-delete-command checkable>
-        <polywc-data-source-array id="dsArray"></polywc-data-source-array>
-        <!--<crud-toolbar id="dataRowToolbar" class="dataRowToolbar"></crud-toolbar>-->
-    </polywc-data-table>
+    <div style="width: 80%;">
+        <polywc-data-table id="tblBooks" caption="List of books (author Dan Brown & Rowling)"
+                    headers='["id", "Author", "Title", "Year"]'
+                    field-id="id" fields='["id", "author", "title", "year"]'
+                    postfixes='["", "", "", " y"]'
+                    show-pager export-csv show-edit-command show-delete-command checkable>
+            <polywc-data-source-array id="dsArray"></polywc-data-source-array>
+        </polywc-data-table>
+    </div>
 
     <p>
         <span style="font-weight: bold">You have selected:</span>

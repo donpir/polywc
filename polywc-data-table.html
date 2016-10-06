@@ -84,19 +84,19 @@ The simplest way to use it is the following, which shows a table with three colu
             <thead id="tblheader">
                 <tr>
                     <th id="tblcaption" class="caption" colspan="100%">
-                        <div>
+                        <div style="padding-top: 10px;">
                             <span>{{ caption }}</span>
                             <span id="msgToast" class="error" hidden="true">Error</span>
-                        </div>
 
-                        <paper-menu-button style="position: absolute; top: 10px; right: 50px;">
-                            <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
-                            <paper-menu class="dropdown-content">
-                                <template is="dom-if" if="{{exportCsv}}">
-                                    <paper-item on-click="handleExportCSV">Export CSV</paper-item>
-                                </template>
-                            </paper-menu>
-                        </paper-menu-button>
+                            <paper-menu-button style="position: relative; float: right; right: 50px; margin: 0px; padding: 0px;">
+                                <paper-icon-button icon="icons:more-horiz" class="dropdown-trigger"></paper-icon-button>
+                                <paper-menu class="dropdown-content">
+                                    <template is="dom-if" if="{{exportCsv}}">
+                                        <paper-item on-click="handleExportCSV">Export CSV</paper-item>
+                                    </template>
+                                </paper-menu>
+                            </paper-menu-button>
+                        </div>
                     </th>
                 </tr>
                 <tr>
@@ -188,7 +188,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
             properties: {
                 caption:            { type: String, value: "" },
-                headers:            { type: Array, value: undefined, observer: '_headersChanged' },
+                headers:            { type: Array, value: undefined /*, observer: '_headersChanged'*/ },
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
                 fieldsData:         { type: Object, value: undefined, notify: false },
@@ -260,10 +260,10 @@ The simplest way to use it is the following, which shows a table with three colu
              **** PROPERTY CHANGED EVENTS.
              ****************************************************************/
 
-            _headersChanged: function(newValue, oldValue) {
+            /*_headersChanged: function(newValue, oldValue) {
                 var colspan = newValue.length - 1;
                 this.$.tblcaption.setAttribute("colspan", colspan);
-            },
+            },*/
 
             /****************************************************************
              **** WC INTERFACE FUNCTIONS.
