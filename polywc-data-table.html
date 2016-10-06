@@ -188,7 +188,7 @@ The simplest way to use it is the following, which shows a table with three colu
 
             properties: {
                 caption:            { type: String, value: "" },
-                headers:            { type: Array, value: undefined /*, observer: '_headersChanged'*/ },
+                headers:            { type: Array, value: undefined },
                 fieldId:            { type: String },
                 fields:             { type: Array, value: undefined },
                 fieldsData:         { type: Object, value: undefined, notify: false },
@@ -260,10 +260,6 @@ The simplest way to use it is the following, which shows a table with three colu
              **** PROPERTY CHANGED EVENTS.
              ****************************************************************/
 
-            /*_headersChanged: function(newValue, oldValue) {
-                var colspan = newValue.length - 1;
-                this.$.tblcaption.setAttribute("colspan", colspan);
-            },*/
 
             /****************************************************************
              **** WC INTERFACE FUNCTIONS.
@@ -360,7 +356,7 @@ The simplest way to use it is the following, which shows a table with three colu
             _handleOnCheck: function(event) {
                 if (!this.checkable) return;
 
-                //This function uses an has hmap (js array) to store checked items.
+                //This function uses an hash map (js array) to store checked items.
                 var _item = event.currentTarget.item;
                 if (_item.checked) this.checked[_item.id] = _item; //Checked true, add item to hash map.
                 else delete this.checked[_item.id]; //Checked false, remove item from hash map.

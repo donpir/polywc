@@ -82,6 +82,10 @@ Example:
             ],
 
             computeLabel: function(totItems, itemsPerPage, curPage) {
+                if (totItems <= 0) {
+                    return "no items";
+                }
+
                 var _lowerBound = (curPage - 1) * itemsPerPage + 1;
                 var _upperBound = curPage * itemsPerPage;
                 if (_upperBound > totItems) _upperBound = totItems;
@@ -94,6 +98,12 @@ Example:
             },
 
             updateArrows: function(totItems, itemsPerPage, curPage) {
+                if (totItems <=0 ) {
+                    this.$.pagerleftarrow.disabled = true;
+                    this.$.pagerrightarrow.disabled = true;
+                    return;
+                }
+
                 this.$.pagerleftarrow.disabled = (curPage == 1);
                 this.$.pagerrightarrow.disabled = (this.isLastPage() == true);
             },
