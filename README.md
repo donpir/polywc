@@ -26,7 +26,8 @@ For the ongoing development features see the [isses](https://github.com/donpir/p
 
 Planned future features:
 
- - customisation of layout and theme.
+ - move to Polymer 2.0 (main feature);
+ - customisation of layout and theme;
  - sorting of the columns.
 
 ## Bugs, support and other issues
