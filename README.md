@@ -2,7 +2,7 @@
 
 It is an HTML Table with pagination. It is a custom reusable Web-Component built using [Polymer 1.0](https://www.polymer-project.org/1.0/). 
 
-Access to the DEMO page [here](http://donpir.github.io/polywc-data-table).
+Access to the DEMO page [here](http://polywc.github.io/polywc-data-table).
 
 It provides the following features:
 
